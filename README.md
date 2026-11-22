@@ -7,35 +7,45 @@ live preview, design customization, ATS checker, cover letter builder, PDF
 export and a personal dashboard. Static web app — no build step, no dependencies
 beyond Google Fonts.
 
-## What works in this build (v1.0.0)
+## What works in this build (v1.1.0)
 
 - **55 templates, genuinely different** — Professional (8), Modern (8),
   Minimalist (7), Creative (7), Technology (6), Student (5), Academic (4),
   Specialized (5), Premium (5). Each has its own layout, header, font,
   accent, skill style, divider and photo treatment. Every thumbnail is the
   real template rendered with sample data — never a generic image.
-- **Template gallery** — search by name, category filter, ATS-only filter,
-  favorites, sorting, full-screen preview, Use This Template.
+- **Full customization** — override any template's layout (one column, two
+  columns, sidebar left/right, banner), header style, accent color, sidebar
+  color, page background, 11 fonts, skills display (text / bars / dots /
+  chips), section heading style, divider style, photo shape, name/body size,
+  line height, margins, spacing, A4 / US Letter — plus reset. Dark mode for
+  the app itself.
+- **Multi-format export** — PDF (print, real document), PNG, JPG, plain-text
+  TXT, standalone HTML, and JSON backup with import. PNG/JPG render the
+  actual document (web fonts fall back to system fonts in the image — a
+  browser limitation, stated in the UI).
 - **Multi-step editor** — Personal, Summary, Experience, Education, Skills,
   Projects, Certifications, Languages, Additional sections. Add / edit /
   delete / reorder everywhere; unlimited entries.
 - **Live preview** — every keystroke updates the document; zoom, fit,
   full-screen, page estimate. Switching templates never erases information.
-- **Design customization** — accent color (presets + picker), font, name/body
-  size, line height, margins, spacing, A4 / US Letter, reset. Hide, show and
-  reorder sections.
+- **CV completeness meter** and **version history** — automatic snapshots as
+  you edit, restore any earlier version.
 - **ATS checker** — 10-point checklist with a score, plus keyword matching
   against a pasted job description.
 - **Writing helpers (on-device)** — summary generator, concise rewrite,
-  grammar check, stronger achievement bullets, skill suggestions. Suggestions
-  are always shown for review and only applied when you approve them. Nothing
-  is sent to any server; nothing is invented about you.
+  grammar check, stronger achievement bullets, skill suggestions, LinkedIn
+  headline generator, interview question generator. Suggestions are always
+  shown for review and only applied when you approve them. Nothing is sent
+  to any server; nothing is invented about you.
 - **PDF export** — the live document prints to a real PDF via the browser
   (A4 by default, US Letter optional). Selectable text, clickable links,
   multi-page. This is not a screenshot: it is the actual document DOM.
 - **Dashboard** — all CVs and cover letters, with Edit / PDF / Duplicate /
-  Rename / Delete, stats, recent activity, account settings.
-- **Cover letter builder** — matching template design, live preview, PDF.
+  Rename / Delete, stats, recent activity, a **job applications tracker**,
+  account settings.
+- **Cover letter builder** — three styles (Classic / Modern / Bold) matching
+  your CV template, live preview, PDF.
 - **Autosave** — every change saves to localStorage (debounced) with a
   Saving / Saved indicator; refresh the page and your CV is still there.
 - **Admin panel** — stats from local data, template management (activate /

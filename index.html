@@ -8,7 +8,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Georgia&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@600;700&family=Montserrat:wght@500;600;700;800&family=Poppins:wght@500;600;700&family=Roboto:wght@400;500;700&family=Lato:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/templates.css">
 </head>
@@ -28,6 +28,7 @@
     </nav>
     <div class="nav-actions">
       <span class="nav-user hidden" id="navUserChip"></span>
+      <button class="btn btn-ghost" id="btnDarkMode" title="Dark mode">🌙</button>
       <button class="btn btn-ghost" id="btnLogin">Log in</button>
       <button class="btn btn-primary" id="btnSignup">Sign up free</button>
       <button class="btn btn-ghost hidden" id="btnLogout">Log out</button>
@@ -143,7 +144,14 @@
       <button class="btn btn-ghost btn-sm" id="btnEditorTemplates">Change template</button>
       <button class="btn btn-ghost btn-sm" id="btnEditorDashboard">← Dashboard</button>
       <button class="btn btn-outline btn-sm" id="btnPrint">Print</button>
-      <button class="btn btn-primary btn-sm" id="btnDownloadPdf">Download PDF</button>
+      <div class="export-group" title="Download your CV in any format">
+        <button class="btn btn-primary btn-sm" id="btnDownloadPdf">PDF</button>
+        <button class="btn btn-outline btn-sm" id="btnDownloadPng">PNG</button>
+        <button class="btn btn-outline btn-sm" id="btnDownloadJpg">JPG</button>
+        <button class="btn btn-outline btn-sm" id="btnDownloadTxt">TXT</button>
+        <button class="btn btn-outline btn-sm" id="btnDownloadHtml">HTML</button>
+        <button class="btn btn-outline btn-sm" id="btnDownloadJson">JSON</button>
+      </div>
     </div>
   </div>
   <div class="editor-mode-toggle">
@@ -157,6 +165,7 @@
         <button class="panel-tab" data-ptab="design">Design</button>
         <button class="panel-tab" data-ptab="sections">Sections</button>
         <button class="panel-tab" data-ptab="ats">ATS Check</button>
+        <button class="panel-tab" data-ptab="tools">Tools</button>
       </div>
 
       <div class="panel-pane" id="ptab-form">
@@ -166,13 +175,49 @@
 
       <div class="panel-pane hidden" id="ptab-design">
         <h3>Design</h3>
+        <div class="completeness"><span>CV completeness</span><div class="comp-bar"><span id="compFill" style="width:0%"></span></div><b id="compLabel">0%</b></div>
+        <label class="field"><span>Layout</span><select id="designLayout" class="select-input">
+          <option value="">Template default</option>
+          <option value="single">One column</option><option value="two-col">Two columns</option>
+          <option value="side-l">Sidebar left</option><option value="side-r">Sidebar right</option>
+          <option value="banner">Banner header</option>
+        </select></label>
+        <label class="field"><span>Header style</span><select id="designHeader" class="select-input">
+          <option value="">Template default</option>
+          <option value="left">Left aligned</option><option value="center">Centered</option>
+          <option value="split">Split (name left, contact right)</option><option value="banner">Banner</option>
+        </select></label>
         <label class="field"><span>Accent color</span><input type="color" id="designAccent" value="#4f46e5"></label>
         <div class="swatches" id="designSwatches"></div>
+        <label class="field"><span>Sidebar color</span><input type="color" id="designSidebar" value="#f1f5f9"></label>
+        <label class="field"><span>Page background</span><input type="color" id="designBg" value="#ffffff"></label>
         <label class="field"><span>Font</span><select id="designFont" class="select-input">
           <option value="">Template default</option>
           <option value="inter">Inter</option><option value="jakarta">Plus Jakarta Sans</option>
           <option value="manrope">Manrope</option><option value="serif">Georgia (serif)</option>
-          <option value="mono">JetBrains Mono</option>
+          <option value="mono">JetBrains Mono</option><option value="playfair">Playfair Display</option>
+          <option value="montserrat">Montserrat</option><option value="poppins">Poppins</option>
+          <option value="roboto">Roboto</option><option value="lato">Lato</option>
+          <option value="opensans">Open Sans</option>
+        </select></label>
+        <label class="field"><span>Skills display</span><select id="designSkill" class="select-input">
+          <option value="">Template default</option>
+          <option value="text">Text list</option><option value="bars">Progress bars</option>
+          <option value="dots">Rating dots</option><option value="chips">Chips</option>
+        </select></label>
+        <label class="field"><span>Section headings</span><select id="designHeading" class="select-input">
+          <option value="">Template default</option>
+          <option value="upper">UPPERCASE</option><option value="accent">Accent color</option>
+          <option value="plain">Plain</option><option value="boxed">Boxed</option>
+        </select></label>
+        <label class="field"><span>Section dividers</span><select id="designDivider" class="select-input">
+          <option value="">Template default</option>
+          <option value="line">Thin line</option><option value="accent">Accent line</option>
+          <option value="double">Double line</option><option value="none">None</option>
+        </select></label>
+        <label class="field"><span>Photo shape</span><select id="designPhoto" class="select-input">
+          <option value="">Template default</option>
+          <option value="none">No photo</option><option value="round">Round</option><option value="square">Square</option>
         </select></label>
         <label class="field"><span>Name size (<span id="designNameSizeVal">28</span>px)</span><input type="range" id="designNameSize" min="20" max="40" value="28"></label>
         <label class="field"><span>Body size (<span id="designBodySizeVal">11</span>pt)</span><input type="range" id="designBodySize" min="9" max="13" value="11"></label>
@@ -182,6 +227,28 @@
         <label class="field"><span>Page size</span><select id="designPageSize" class="select-input"><option value="A4">A4</option><option value="Letter">US Letter</option></select></label>
         <button class="btn btn-ghost" id="designReset">Reset design</button>
         <p class="hint">Premium templates are unlocked in this demo build — the paywall is wired in the data model, not yet connected to a payment provider. See README.</p>
+      </div>
+
+      <div class="panel-pane hidden" id="ptab-tools">
+        <h3>Tools</h3>
+        <h4 class="tools-h">Version history</h4>
+        <p class="hint">Snapshots are saved automatically as you edit. Restore any earlier version.</p>
+        <ul class="version-list" id="versionList"></ul>
+        <h4 class="tools-h">Backup &amp; restore</h4>
+        <div class="btn-row">
+          <button class="btn btn-outline btn-sm" id="btnExportJson2">Export JSON</button>
+          <button class="btn btn-outline btn-sm" id="btnImportJson">Import JSON</button>
+          <input type="file" id="importJsonFile" accept="application/json,.json" class="hidden">
+        </div>
+        <button class="btn btn-ghost btn-sm" id="btnFillSample">Fill with sample data</button>
+        <h4 class="tools-h">LinkedIn headline</h4>
+        <p class="hint">Generate a headline from your title and top skills.</p>
+        <button class="btn btn-outline btn-sm" id="btnHeadline">✦ Generate headline</button>
+        <div id="headlineBox"></div>
+        <h4 class="tools-h">Interview preparation</h4>
+        <p class="hint">Practice questions based on your role and experience.</p>
+        <button class="btn btn-outline btn-sm" id="btnInterview">✦ Generate questions</button>
+        <div id="interviewBox"></div>
       </div>
 
       <div class="panel-pane hidden" id="ptab-sections">
@@ -236,6 +303,20 @@
   <h2 class="subhead">Cover Letters</h2>
   <div class="doc-grid" id="letterGrid"></div>
   <p class="empty hidden" id="letterEmpty">No cover letters yet.</p>
+  <h2 class="subhead">Job Applications</h2>
+  <p class="hint" style="max-width:1180px;margin:0 auto;padding:0 1.2rem">Track where you applied with each CV.</p>
+  <div class="card settings-card">
+    <div class="field-row">
+      <label class="field"><span>Job title</span><input type="text" id="appJob" class="text-input" placeholder="Senior Product Designer"></label>
+      <label class="field"><span>Company</span><input type="text" id="appCompany" class="text-input" placeholder="FinEdge Ltd."></label>
+    </div>
+    <div class="field-row">
+      <label class="field"><span>Status</span><select id="appStatus" class="select-input"><option>Applied</option><option>Interview</option><option>Offer</option><option>Rejected</option></select></label>
+      <label class="field"><span>CV used</span><select id="appCv" class="select-input"></select></label>
+    </div>
+    <button class="btn btn-outline" id="appAddBtn">+ Add application</button>
+    <ul class="activity-list" id="appList" style="padding:0"></ul>
+  </div>
   <h2 class="subhead">Recent Activity</h2>
   <ul class="activity-list" id="recentList"></ul>
   <h2 class="subhead">Account Settings</h2>
@@ -256,6 +337,11 @@
   </div>
   <div class="cover-layout">
     <div class="cover-form card">
+      <label class="field"><span>Cover letter style</span><select id="clStyle" class="select-input">
+        <option value="classic">Classic — serif, traditional</option>
+        <option value="modern">Modern — clean, accent bar</option>
+        <option value="bold">Bold — big name, dark header</option>
+      </select></label>
       <label class="field"><span>Cover letter title</span><input type="text" id="clTitle" class="text-input"></label>
       <div class="field-row">
         <label class="field"><span>Your name</span><input type="text" id="clName" class="text-input"></label>
@@ -371,6 +457,7 @@
 <script src="js/templates.js"></script>
 <script src="js/store.js"></script>
 <script src="js/render.js"></script>
+<script src="js/export.js"></script>
 <script src="js/editor.js"></script>
 <script src="js/app.js"></script>
 </body>

@@ -268,3 +268,35 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   #printRoot .cv-doc { margin: 0; box-shadow: none; }
   @page { size: A4; margin: 0; }
 }
+
+/* export group */
+.export-group { display: inline-flex; gap: .3rem; flex-wrap: wrap; }
+.completeness { display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; font-size: .85rem; font-weight: 600; color: var(--navy); }
+.comp-bar { flex: 1; height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.comp-bar span { display: block; height: 100%; background: var(--accent); border-radius: 999px; transition: width .3s; }
+.tools-h { margin: 1.2rem 0 .4rem; font-size: .95rem; }
+.version-list { list-style: none; padding: 0; margin: 0 0 .5rem; }
+.version-list li { display: flex; justify-content: space-between; align-items: center; gap: .5rem; padding: .45rem 0; border-bottom: 1px dashed var(--line); font-size: .88rem; }
+
+/* cover letter styles */
+.cl-doc { background: #fff; width: 100%; max-width: 560px; box-shadow: var(--shadow); border-radius: 4px; padding: 2rem 2.2rem; font-size: .92rem; color: var(--ink); }
+.cl-doc.cl-modern { border-top: 5px solid var(--cv-accent, #4f46e5); }
+.cl-doc.cl-modern h1 { color: var(--cv-accent, #4f46e5); }
+.cl-doc.cl-bold { padding: 0; overflow: hidden; }
+.cl-doc.cl-bold .cl-bold-head { background: var(--navy); color: #fff; padding: 1.4rem 2.2rem; }
+.cl-doc.cl-bold .cl-bold-head h1 { color: #fff; margin: 0; }
+.cl-doc.cl-bold .cl-bold-body { padding: 1.6rem 2.2rem 2rem; }
+.cl-doc.cl-classic { font-family: Georgia, serif; }
+
+/* dark mode (app chrome only — CV documents stay print-white) */
+body.dark { --bg: #0f172a; --soft: #1e293b; --ink: #e2e8f0; --navy: #f1f5f9; --muted: #94a3b8; --line: #334155; background: var(--bg); }
+body.dark .nav { background: rgba(15, 23, 42, .92); }
+body.dark .btn, body.dark .text-input, body.dark .select-input, body.dark textarea.text-input,
+body.dark .card, body.dark .tpl-card, body.dark .doc-card, body.dark .step-card, body.dark .feat,
+body.dark .testi, body.dark .editor-panel, body.dark .panel-tab, body.dark .faq-q, body.dark .modal-card,
+body.dark .step-btn, body.dark .repeat-item, body.dark .admin-tpl-row, body.dark .cat-chip,
+body.dark .icon-btn, body.dark .auth-tab, body.dark input[type="color"] { background: #1e293b; color: var(--ink); border-color: var(--line); }
+body.dark .editor-preview, body.dark .cover-preview, body.dark .tpl-modal-preview { background: #0b1220; }
+body.dark .step-btn.active, body.dark .auth-tab.active { background: var(--accent); color: #fff; }
+body.dark .cv-chip, body.dark .badge { background: #334155; color: #e2e8f0; }
+body.dark .hd-boxed .cv-h2 { background: #334155; }

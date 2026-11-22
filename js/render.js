@@ -163,16 +163,29 @@
     opts = opts || {};
     var t = template(resume.templateId);
     var d = resume.design || {};
-    var accent = d.accent || t.accent;
-    var font = d.font || t.font;
+    /* effective config: design overrides win over the template defaults */
+    var eff = {
+      layout: d.layout || t.layout,
+      header: d.header || t.header,
+      font: d.font || t.font,
+      accent: d.accent || t.accent,
+      skill: d.skill || t.skill,
+      divider: d.divider || t.divider,
+      photo: d.photo || t.photo,
+      heading: d.heading || t.heading
+    };
+    var accent = eff.accent;
+    var font = eff.font;
     var hidden = resume.hiddenSections || [];
     var order = (resume.sectionOrder && resume.sectionOrder.length ? resume.sectionOrder :
       ["summary", "experience", "education", "skills", "projects", "certifications", "languages", "custom"]);
 
     var doc = document.createElement("div");
-    doc.className = "cv-doc layout-" + t.layout + " header-" + t.header + " font-" + font +
-      " skill-" + t.skill + " divider-" + t.divider + " heading-" + t.heading;
+    doc.className = "cv-doc layout-" + eff.layout + " header-" + eff.header + " font-" + font +
+      " skill-" + eff.skill + " divider-" + eff.divider + " heading-" + eff.heading;
     doc.style.setProperty("--cv-accent", accent);
+    doc.style.setProperty("--cv-bg", d.bg || "#ffffff");
+    doc.style.setProperty("--cv-sidebar-bg", d.sidebar || "#f1f5f9");
     doc.style.setProperty("--cv-name-size", (d.nameSize || 28) + "px");
     doc.style.setProperty("--cv-body-size", (d.bodySize || 11) + "pt");
     doc.style.setProperty("--cv-line-height", d.lineHeight || 1.5);
@@ -182,17 +195,17 @@
 
     var p = resume.personal || {};
     var photoHtml = "";
-    if (p.photo && t.photo !== "none") {
-      photoHtml = '<img class="cv-photo photo-' + t.photo + '" src="' + esc(p.photo) + '" alt="">';
+    if (p.photo && eff.photo !== "none") {
+      photoHtml = '<img class="cv-photo photo-' + eff.photo + '" src="' + esc(p.photo) + '" alt="">';
     }
 
     var headerHtml = "";
-    if (t.header === "banner") {
+    if (eff.header === "banner") {
       headerHtml = '<header class="cv-header"><div class="cv-head-main">' + photoHtml +
         '<div><h1 class="cv-name">' + esc(p.fullName || "Your Name") + '</h1>' +
         '<p class="cv-title">' + esc(p.title || "Professional Title") + "</p></div></div>" +
         '<p class="cv-contact">' + contactLine(p) + "</p></header>";
-    } else if (t.header === "split") {
+    } else if (eff.header === "split") {
       headerHtml = '<header class="cv-header"><div class="cv-head-split"><div>' + photoHtml +
         '<h1 class="cv-name">' + esc(p.fullName || "Your Name") + '</h1>' +
         '<p class="cv-title">' + esc(p.title || "Professional Title") + "</p></div>" +
@@ -208,30 +221,30 @@
     var sideKeys = ["skills", "languages", "certifications"];
     var mainKeys = order.filter(function (k) { return sideKeys.indexOf(k) === -1 && hidden.indexOf(k) === -1; });
     var sideHtml = "";
-    if (t.layout === "side-l" || t.layout === "side-r") {
+    if (eff.layout === "side-l" || eff.layout === "side-r") {
       sideHtml = '<aside class="cv-sidebar">' +
         '<div class="cv-side-contact"><h3 class="cv-side-h">Contact</h3><p>' + contactLine(p) + "</p></div>" +
         order.filter(function (k) { return sideKeys.indexOf(k) !== -1 && hidden.indexOf(k) === -1; })
-          .map(function (k) { return sectionHtml(t, k, resume); }).join("") +
+          .map(function (k) { return sectionHtml(eff, k, resume); }).join("") +
         "</aside>";
     }
     var mainHtml = order.filter(function (k) { return hidden.indexOf(k) === -1; })
       .filter(function (k) {
-        return !((t.layout === "side-l" || t.layout === "side-r") && sideKeys.indexOf(k) !== -1);
+        return !((eff.layout === "side-l" || eff.layout === "side-r") && sideKeys.indexOf(k) !== -1);
       })
-      .map(function (k) { return sectionHtml(t, k, resume); }).join("");
+      .map(function (k) { return sectionHtml(eff, k, resume); }).join("");
 
     var bodyHtml;
-    if (t.layout === "side-l") {
+    if (eff.layout === "side-l") {
       bodyHtml = '<div class="cv-body">' + sideHtml + '<div class="cv-main">' + mainHtml + "</div></div>";
-    } else if (t.layout === "side-r") {
+    } else if (eff.layout === "side-r") {
       bodyHtml = '<div class="cv-body"><div class="cv-main">' + mainHtml + "</div>" + sideHtml + "</div>";
-    } else if (t.layout === "two-col") {
+    } else if (eff.layout === "two-col") {
       var leftKeys = ["experience", "projects"];
       var rightKeys = order.filter(function (k) { return leftKeys.indexOf(k) === -1 && hidden.indexOf(k) === -1; });
       var leftHtml = order.filter(function (k) { return leftKeys.indexOf(k) !== -1 && hidden.indexOf(k) === -1; })
-        .map(function (k) { return sectionHtml(t, k, resume); }).join("");
-      var rightHtml = rightKeys.map(function (k) { return sectionHtml(t, k, resume); }).join("");
+        .map(function (k) { return sectionHtml(eff, k, resume); }).join("");
+      var rightHtml = rightKeys.map(function (k) { return sectionHtml(eff, k, resume); }).join("");
       bodyHtml = '<div class="cv-body cv-two-col"><div class="cv-main">' + leftHtml + '</div><div class="cv-rail">' + rightHtml + "</div></div>";
     } else {
       bodyHtml = '<div class="cv-body"><div class="cv-main">' + mainHtml + "</div></div>";

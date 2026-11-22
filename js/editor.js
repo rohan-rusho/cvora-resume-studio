@@ -42,6 +42,7 @@
     clearTimeout(saveTimer);
     saveTimer = setTimeout(function () {
       store.saveResume(current);
+      snapshotVersion();
       setSaveState("Saved ✓");
       renderDashboardSoon();
     }, 600);
@@ -59,6 +60,114 @@
     var tpl = window.CvoraRender.template(current.templateId);
     $("previewMeta").textContent = tpl.name + " • ≈ " + pages + " page" + (pages > 1 ? "s" : "") + " • " + (current.design.pageSize || "A4");
     markDoneSteps();
+    renderCompleteness();
+  }
+
+  function renderCompleteness() {
+    var r = current, p = r.personal;
+    var parts = [
+      !!(p.fullName && p.email && p.phone),
+      !!r.summary,
+      r.experience.length > 0,
+      r.education.length > 0,
+      r.skills.length >= 5,
+      r.projects.length > 0,
+      r.certifications.length > 0,
+      r.languages.length > 0
+    ];
+    var pct = Math.round(parts.filter(Boolean).length / parts.length * 100);
+    var fill = $("compFill");
+    if (fill) { fill.style.width = pct + "%"; $("compLabel").textContent = pct + "%"; }
+  }
+
+  /* ---------------- version history ---------------- */
+  function historyKey() { return "cvora.history." + current.id + ".v1"; }
+  function loadVersions() {
+    try { return JSON.parse(localStorage.getItem(historyKey()) || "[]"); } catch (e) { return []; }
+  }
+  function snapshotVersion() {
+    var versions = loadVersions();
+    var snap = JSON.stringify(current);
+    if (versions.length && versions[0].data === snap) return;
+    versions.unshift({ at: new Date().toISOString(), data: snap });
+    versions = versions.slice(0, 10);
+    try { localStorage.setItem(historyKey(), JSON.stringify(versions)); } catch (e) { /* full */ }
+  }
+  function renderVersionList() {
+    var ul = $("versionList");
+    if (!ul) return;
+    var versions = loadVersions();
+    ul.innerHTML = "";
+    if (!versions.length) { ul.innerHTML = '<li>No snapshots yet — they appear as you edit.</li>'; return; }
+    versions.forEach(function (v, i) {
+      var li = document.createElement("li");
+      var d = new Date(v.at);
+      li.innerHTML = "<span>Snapshot " + (i + 1) + " — " + d.toLocaleString() + "</span>";
+      var b = document.createElement("button");
+      b.className = "btn btn-outline btn-sm";
+      b.type = "button";
+      b.textContent = "Restore";
+      b.addEventListener("click", function () {
+        if (!window.confirm("Restore this version? Your current unsaved edits will be replaced.")) return;
+        var data = JSON.parse(v.data);
+        Object.keys(data).forEach(function (k) { current[k] = data[k]; });
+        store.saveResume(current);
+        buildStepPanels();
+        renderDesignPanel();
+        renderSectionList();
+        renderAts();
+        updatePreview();
+        window.CvoraApp.toast("Version restored.");
+      });
+      li.appendChild(b);
+      ul.appendChild(li);
+    });
+  }
+
+  /* ---------------- tools: headline + interview ---------------- */
+  function generateHeadline() {
+    var p = current.personal;
+    var role = p.title || current.currentRole || "Professional";
+    var skills = current.skills.slice(0, 3).map(function (s) { return s.name; }).join(" • ");
+    var years = current.yearsExp ? current.yearsExp + " yrs" : "";
+    var headline = role + (years ? " | " + years + " experience" : "") + (skills ? " | " + skills : "") +
+      (current.industry ? " | " + current.industry : "");
+    var box = $("headlineBox");
+    box.innerHTML = '<div class="ai-suggestion"><span class="ai-label">LinkedIn headline — copy and paste</span>' + esc(headline) +
+      '<div class="ai-row"><button type="button" class="btn btn-primary btn-sm" id="copyHeadline">Copy</button></div></div>';
+    $("copyHeadline").addEventListener("click", function () {
+      if (navigator.clipboard) navigator.clipboard.writeText(headline).then(function () { window.CvoraApp.toast("Headline copied."); });
+    });
+  }
+  function generateInterview() {
+    var role = current.personal.title || current.currentRole || "your role";
+    var qs = [
+      "Tell me about yourself — in 60 seconds, using your experience at " + (current.experience[0] ? current.experience[0].company : "your last job") + ".",
+      "What is the achievement on your CV you are proudest of, and what did you actually do to make it happen?",
+      "Walk me through a hard problem you solved in your role as " + role + ". What was the result?",
+      "Why do you want this role, and what do you know about the company?",
+      "Where do you see yourself in 3 years, and how does this role get you there?",
+      "Tell me about a time you disagreed with a teammate. How did you handle it?",
+      "What is a skill you are currently improving, and how are you doing it?",
+      "Do you have any questions for us?"
+    ];
+    var box = $("interviewBox");
+    box.innerHTML = '<div class="ai-suggestion"><span class="ai-label">Interview prep — practice these out loud</span>' +
+      qs.map(function (q, i) { return (i + 1) + ". " + esc(q); }).join("<br><br>") + "</div>";
+  }
+  function fillSample() {
+    if (!window.confirm("Replace this CV's content with sample data?")) return;
+    var s = window.CvoraSampleResume();
+    var keepId = current.id, keepTitle = current.title, keepTemplate = current.templateId, keepDesign = current.design;
+    Object.keys(s).forEach(function (k) { if (k !== "id" && k !== "title" && k !== "templateId" && k !== "design") current[k] = s[k]; });
+    current.id = keepId; current.title = keepTitle; current.templateId = keepTemplate; current.design = keepDesign;
+    store.saveResume(current);
+    buildStepPanels();
+    renderDesignPanel();
+    renderSectionList();
+    renderAts();
+    updatePreview();
+    window.CvoraApp.toast("Sample data loaded — edit it to make it yours.");
   }
 
   function markDoneSteps() {
@@ -563,7 +672,15 @@
   function renderDesignPanel() {
     var d = current.design;
     var tpl = window.CvoraRender.template(current.templateId);
+    $("designLayout").value = d.layout || "";
+    $("designHeader").value = d.header || "";
     $("designAccent").value = d.accent || tpl.accent;
+    $("designSidebar").value = d.sidebar || "#f1f5f9";
+    $("designBg").value = d.bg || "#ffffff";
+    $("designSkill").value = d.skill || "";
+    $("designHeading").value = d.heading || "";
+    $("designDivider").value = d.divider || "";
+    $("designPhoto").value = d.photo || "";
     var sw = $("designSwatches");
     sw.innerHTML = "";
     SWATCHES.forEach(function (c) {
@@ -593,7 +710,18 @@
     $("designPageSize").value = d.pageSize || "A4";
   }
   function bindDesignPanel() {
+    function sel(id, key) {
+      $(id).addEventListener("change", function (e) { current.design[key] = e.target.value; autosave(); updatePreview(); });
+    }
+    sel("designLayout", "layout");
+    sel("designHeader", "header");
+    sel("designSkill", "skill");
+    sel("designHeading", "heading");
+    sel("designDivider", "divider");
+    sel("designPhoto", "photo");
     $("designAccent").addEventListener("input", function (e) { current.design.accent = e.target.value; autosave(); updatePreview(); });
+    $("designSidebar").addEventListener("input", function (e) { current.design.sidebar = e.target.value; autosave(); updatePreview(); });
+    $("designBg").addEventListener("input", function (e) { current.design.bg = e.target.value; autosave(); updatePreview(); });
     $("designFont").addEventListener("change", function (e) { current.design.font = e.target.value; autosave(); updatePreview(); });
     function range(id, valId, key, fmt) {
       $(id).addEventListener("input", function (e) {
@@ -610,7 +738,7 @@
     $("designPageSize").addEventListener("change", function (e) { current.design.pageSize = e.target.value; autosave(); updatePreview(); });
     $("designReset").addEventListener("click", function () {
       var tpl = window.CvoraRender.template(current.templateId);
-      current.design = { accent: "", font: "", nameSize: 28, bodySize: 11, lineHeight: 1.5, margin: 18, spacing: 10, pageSize: "A4" };
+      current.design = { accent: "", font: "", layout: "", header: "", skill: "", heading: "", divider: "", photo: "", sidebar: "", bg: "", nameSize: 28, bodySize: 11, lineHeight: 1.5, margin: 18, spacing: 10, pageSize: "A4" };
       renderDesignPanel(); autosave(); updatePreview();
       window.CvoraApp.toast("Design reset to the template defaults.");
     });
@@ -802,6 +930,52 @@
     $("editorTitle").addEventListener("input", function (e) { current.title = e.target.value; autosave(); });
     $("btnDownloadPdf").addEventListener("click", downloadPdf);
     $("btnPrint").addEventListener("click", downloadPdf);
+    $("btnDownloadPng").addEventListener("click", function () {
+      store.saveResume(current);
+      window.CvoraExport.exportImage(current, "png");
+    });
+    $("btnDownloadJpg").addEventListener("click", function () {
+      store.saveResume(current);
+      window.CvoraExport.exportImage(current, "jpg");
+    });
+    $("btnDownloadTxt").addEventListener("click", function () {
+      store.saveResume(current);
+      window.CvoraExport.downloadText(window.CvoraExport.toTxt(current), window.CvoraExport.fileName(current, "txt"), "text/plain");
+      store.recordDownload();
+      window.CvoraApp.toast("Plain-text CV downloaded.");
+    });
+    $("btnDownloadHtml").addEventListener("click", function () {
+      store.saveResume(current);
+      window.CvoraExport.toHtml(current).then(function (html) {
+        window.CvoraExport.downloadText(html, window.CvoraExport.fileName(current, "html"), "text/html");
+        store.recordDownload();
+        window.CvoraApp.toast("Standalone HTML CV downloaded — open it in any browser.");
+      });
+    });
+    $("btnDownloadJson").addEventListener("click", function () {
+      store.saveResume(current);
+      window.CvoraExport.downloadText(window.CvoraExport.toJson(current), window.CvoraExport.fileName(current, "json"), "application/json");
+      window.CvoraApp.toast("CV data (JSON) downloaded — import it later from Tools.");
+    });
+    $("btnExportJson2").addEventListener("click", function () {
+      store.saveResume(current);
+      window.CvoraExport.downloadText(window.CvoraExport.toJson(current), window.CvoraExport.fileName(current, "json"), "application/json");
+      window.CvoraApp.toast("CV data (JSON) downloaded.");
+    });
+    $("btnImportJson").addEventListener("click", function () { $("importJsonFile").click(); });
+    $("importJsonFile").addEventListener("change", function (e) {
+      var file = e.target.files && e.target.files[0];
+      if (!file) return;
+      window.CvoraExport.importJsonFile(file, function (res) {
+        if (!res.ok) { window.CvoraApp.toast(res.error); return; }
+        window.CvoraEditor.open(res.resume.id);
+        window.CvoraApp.toast("CV imported.");
+      });
+      e.target.value = "";
+    });
+    $("btnFillSample").addEventListener("click", fillSample);
+    $("btnHeadline").addEventListener("click", generateHeadline);
+    $("btnInterview").addEventListener("click", generateInterview);
     $("btnEditorDashboard").addEventListener("click", function () { store.saveResume(current); window.CvoraApp.showView("dashboard"); });
     $("btnEditorTemplates").addEventListener("click", function () { store.saveResume(current); window.CvoraApp.showView("templates"); });
     $("zoomIn").addEventListener("click", function () { setZoom(zoom + 0.1); });
@@ -833,6 +1007,8 @@
         $("ptab-" + name).classList.remove("hidden");
         if (name === "ats") renderAts();
         if (name === "sections") renderSectionList();
+        if (name === "tools") renderVersionList();
+        if (name === "design") renderCompleteness();
       });
     });
     window.addEventListener("beforeunload", function () { if (current) store.saveResume(current); });

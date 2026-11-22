@@ -43,7 +43,9 @@
       createdAt: now(),
       updatedAt: now(),
       design: {
-        accent: "", font: "", nameSize: 28, bodySize: 11, lineHeight: 1.5,
+        accent: "", font: "", layout: "", header: "", skill: "", heading: "",
+        divider: "", photo: "", sidebar: "", bg: "",
+        nameSize: 28, bodySize: 11, lineHeight: 1.5,
         margin: 18, spacing: 10, pageSize: "A4"
       },
       hiddenSections: [],
@@ -195,6 +197,7 @@
       var letter = {
         id: uid("cl"), title: "Cover Letter",
         templateId: fromResume ? fromResume.templateId : "executive-classic",
+        style: "classic",
         applicantName: p.fullName || "", email: p.email || "", phone: p.phone || "",
         city: p.city || "", country: p.country || "",
         recipientName: "", company: "", jobTitle: "", date: new Date().toISOString().slice(0, 10),

@@ -204,9 +204,46 @@
     }
   }
 
+  /* ---------------- job applications tracker ---------------- */
+  function loadApps() {
+    try { return JSON.parse(localStorage.getItem("cvora.apps.v1") || "[]"); } catch (e) { return []; }
+  }
+  function saveApps(apps) { try { localStorage.setItem("cvora.apps.v1", JSON.stringify(apps)); } catch (e) { /* ignore */ } }
+  function renderApps() {
+    var apps = loadApps();
+    var sel = $("appCv");
+    sel.innerHTML = "";
+    store.resumes.forEach(function (r) {
+      var o = document.createElement("option");
+      o.value = r.id; o.textContent = r.title;
+      sel.appendChild(o);
+    });
+    var list = $("appList");
+    list.innerHTML = "";
+    if (!apps.length) { list.innerHTML = "<li>No applications tracked yet.</li>"; return; }
+    apps.forEach(function (a, i) {
+      var li = document.createElement("li");
+      var cv = store.getResume(a.cvId);
+      li.innerHTML = "<strong>" + esc(a.job) + "</strong> at " + esc(a.company) + " — " + esc(a.status) +
+        " • " + esc(a.date) + (cv ? " • CV: " + esc(cv.title) : "") + " ";
+      var del = document.createElement("button");
+      del.className = "btn btn-ghost btn-sm";
+      del.type = "button";
+      del.textContent = "Remove";
+      del.addEventListener("click", function () {
+        apps.splice(i, 1);
+        saveApps(apps);
+        renderApps();
+      });
+      li.appendChild(del);
+      list.appendChild(li);
+    });
+  }
+
   /* ---------------- dashboard ---------------- */
   function renderDashboard() {
     if (!store.user) { openAuth("login"); return; }
+    renderApps();
     $("dashWelcome").textContent = "Welcome back, " + store.user.name.split(" ")[0];
     $("dashSub").textContent = store.user.email + " • " + store.resumes.length + " CV" + (store.resumes.length === 1 ? "" : "s") + " • " + store.letters.length + " cover letter" + (store.letters.length === 1 ? "" : "s");
     var last = store.resumes[0];
@@ -315,6 +352,7 @@
   }
   function fillCoverForm() {
     var l = currentLetter;
+    $("clStyle").value = l.style || "classic";
     $("clTitle").value = l.title; $("clName").value = l.applicantName; $("clEmail").value = l.email;
     $("clCity").value = l.city; $("clPhone").value = l.phone; $("clRecipient").value = l.recipientName;
     $("clCompany").value = l.company; $("clJob").value = l.jobTitle; $("clDate").value = l.date || "";
@@ -322,6 +360,7 @@
   }
   function readCoverForm() {
     var l = currentLetter;
+    l.style = $("clStyle").value;
     l.title = $("clTitle").value; l.applicantName = $("clName").value; l.email = $("clEmail").value;
     l.city = $("clCity").value; l.phone = $("clPhone").value; l.recipientName = $("clRecipient").value;
     l.company = $("clCompany").value; l.jobTitle = $("clJob").value; l.date = $("clDate").value;
@@ -331,17 +370,22 @@
     var l = currentLetter;
     var tpl = window.CvoraRender.template(l.templateId);
     var accent = tpl.accent;
+    var style = l.style || "classic";
     var prev = $("clPreview");
-    prev.innerHTML = '<div class="cl-doc" style="--cv-accent:' + accent + '">' +
-      "<h1>" + esc(l.applicantName || "Your Name") + "</h1>" +
-      '<p class="cl-sub">' + esc([l.email, l.phone, l.city].filter(Boolean).join(" • ")) + "</p>" +
-      "<p>" + esc(l.date || "") + "</p>" +
+    var head = "<h1>" + esc(l.applicantName || "Your Name") + "</h1>" +
+      '<p class="cl-sub">' + esc([l.email, l.phone, l.city].filter(Boolean).join(" • ")) + "</p>";
+    var body = "<p>" + esc(l.date || "") + "</p>" +
       "<p>Dear " + esc(l.recipientName || "Hiring Manager") + ",</p>" +
       (l.company || l.jobTitle ? "<p><strong>Re: " + esc(l.jobTitle || "Application") + (l.company ? " at " + esc(l.company) : "") + "</strong></p>" : "") +
       "<p>" + esc(l.opening || "Your opening paragraph will appear here.") + "</p>" +
       "<p>" + esc(l.body || "Your main body will appear here.") + "</p>" +
       "<p>" + esc(l.closing || "Your closing paragraph will appear here.") + "</p>" +
-      "<p>Sincerely,<br><strong>" + esc(l.applicantName || "Your Name") + "</strong></p></div>";
+      "<p>Sincerely,<br><strong>" + esc(l.applicantName || "Your Name") + "</strong></p>";
+    if (style === "bold") {
+      prev.innerHTML = '<div class="cl-doc cl-bold" style="--cv-accent:' + accent + '"><div class="cl-bold-head">' + head + '</div><div class="cl-bold-body">' + body + "</div></div>";
+    } else {
+      prev.innerHTML = '<div class="cl-doc cl-' + style + '" style="--cv-accent:' + accent + '">' + head + body + "</div>";
+    }
   }
   function downloadLetterPdf(l) {
     store.recordDownload();
@@ -349,8 +393,8 @@
     root.innerHTML = "";
     var tpl = window.CvoraRender.template(l.templateId);
     var div = document.createElement("div");
-    div.className = "cl-doc";
-    div.style.cssText = "max-width:none;width:210mm;min-height:297mm;padding:18mm;box-sizing:border-box;font-size:11pt;line-height:1.5;";
+    div.className = "cl-doc cl-" + (l.style || "classic");
+    div.style.cssText = "max-width:none;width:210mm;min-height:297mm;padding:18mm;box-sizing:border-box;font-size:11pt;line-height:1.5;--cv-accent:" + tpl.accent + ";";
     div.innerHTML = "<h1 style='font-size:20px;margin:0 0 4px'>" + esc(l.applicantName || "Your Name") + "</h1>" +
       "<p style='color:#64748b;font-size:10pt'>" + esc([l.email, l.phone, l.city].filter(Boolean).join(" • ")) + "</p>" +
       "<p>" + esc(l.date || "") + "</p><p>Dear " + esc(l.recipientName || "Hiring Manager") + ",</p>" +
@@ -564,6 +608,12 @@
     });
 
     /* cover letter */
+    $("clStyle").addEventListener("change", function () {
+      if (!currentLetter) return;
+      readCoverForm();
+      renderCoverPreview();
+      store.saveLetter(currentLetter);
+    });
     ["clTitle", "clName", "clEmail", "clCity", "clPhone", "clRecipient", "clCompany", "clJob", "clDate", "clOpening", "clBody", "clClosing"].forEach(function (id) {
       $(id).addEventListener("input", function () {
         if (!currentLetter) return;
@@ -587,6 +637,29 @@
       downloadLetterPdf(currentLetter);
     });
     $("clBackBtn").addEventListener("click", function () { showView("dashboard"); });
+
+    /* applications tracker */
+    $("appAddBtn").addEventListener("click", function () {
+      var job = $("appJob").value.trim(), company = $("appCompany").value.trim();
+      if (!job || !company) { toast("Enter a job title and company."); return; }
+      var apps = loadApps();
+      apps.unshift({ job: job, company: company, status: $("appStatus").value, cvId: $("appCv").value, date: new Date().toISOString().slice(0, 10) });
+      saveApps(apps);
+      $("appJob").value = ""; $("appCompany").value = "";
+      renderApps();
+      toast("Application added.");
+    });
+
+    /* dark mode */
+    var dark = false;
+    try { dark = localStorage.getItem("cvora.dark.v1") === "1"; } catch (e) { /* ignore */ }
+    if (dark) document.body.classList.add("dark");
+    $("btnDarkMode").textContent = dark ? "☀️" : "🌙";
+    $("btnDarkMode").addEventListener("click", function () {
+      var on = document.body.classList.toggle("dark");
+      $("btnDarkMode").textContent = on ? "☀️" : "🌙";
+      try { localStorage.setItem("cvora.dark.v1", on ? "1" : "0"); } catch (e) { /* ignore */ }
+    });
 
     /* admin */
     $("adminSaveBtn").addEventListener("click", function () {

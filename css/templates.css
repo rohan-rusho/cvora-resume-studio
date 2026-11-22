@@ -2,11 +2,11 @@
    One renderer, 55 configs: layout, header, font, accent, skills, dividers. */
 
 .cv-doc {
-  width: 210mm; min-height: 297mm; background: #fff; color: #1e293b;
+  width: 210mm; min-height: 297mm; background: var(--cv-bg, #fff); color: #1e293b;
   padding: var(--cv-margin, 18mm); font-size: var(--cv-body-size, 11pt);
   line-height: var(--cv-line-height, 1.5); box-sizing: border-box;
   box-shadow: 0 4px 24px rgba(15, 23, 42, .12); margin: 0 auto;
-  --cv-accent: #4f46e5;
+  --cv-accent: #4f46e5; --cv-sidebar-bg: #f1f5f9;
 }
 .cv-doc a { color: var(--cv-accent); text-decoration: none; }
 .cv-doc p { margin: 0 0 .45em; }
@@ -17,6 +17,12 @@
 .font-manrope { font-family: Manrope, Inter, sans-serif; }
 .font-serif { font-family: Georgia, "Times New Roman", serif; }
 .font-mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.font-playfair { font-family: "Playfair Display", Georgia, serif; }
+.font-montserrat { font-family: Montserrat, Inter, sans-serif; }
+.font-poppins { font-family: Poppins, Inter, sans-serif; }
+.font-roboto { font-family: Roboto, Inter, sans-serif; }
+.font-lato { font-family: Lato, Inter, sans-serif; }
+.font-opensans { font-family: "Open Sans", Inter, sans-serif; }
 
 /* header */
 .cv-header { margin-bottom: calc(var(--cv-spacing, 10px) + 4px); }
@@ -86,7 +92,7 @@
 .cv-rail .cv-section { margin-bottom: calc(var(--cv-spacing, 10px) * .8); }
 .layout-side-l .cv-body, .layout-side-r .cv-body { display: grid; grid-template-columns: 62mm 1fr; gap: 0; }
 .layout-side-r .cv-body { grid-template-columns: 1fr 62mm; }
-.cv-sidebar { background: #f1f5f9; padding: 12px; border-radius: 4px; }
+.cv-sidebar { background: var(--cv-sidebar-bg, #f1f5f9); padding: 12px; border-radius: 4px; }
 .layout-side-l .cv-sidebar { margin-right: 16px; }
 .layout-side-r .cv-sidebar { margin-left: 16px; }
 .cv-sidebar .cv-h2 { font-size: .95em; }
