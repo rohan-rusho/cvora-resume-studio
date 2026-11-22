@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CVora — Create Your Future. One Resume at a Time.</title>
+<meta name="description" content="Create a professional, ATS-friendly resume in minutes. 55+ premium templates, live preview, PDF download, cover letters.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Georgia&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/templates.css">
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#" data-nav="landing"><span class="logo-mark">C</span> CVora <span class="logo-tag">Resume Studio</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#" data-nav="templates">Templates</a>
+      <a href="#" data-nav="landing" data-anchor="features">Features</a>
+      <a href="#" data-nav="landing" data-anchor="how">How it works</a>
+      <a href="#" data-nav="landing" data-anchor="faq">FAQ</a>
+      <a href="#" data-nav="dashboard" class="nav-dash hidden" id="navDashboard">Dashboard</a>
+      <a href="#" data-nav="admin" class="nav-dash hidden" id="navAdmin">Admin</a>
+    </nav>
+    <div class="nav-actions">
+      <span class="nav-user hidden" id="navUserChip"></span>
+      <button class="btn btn-ghost" id="btnLogin">Log in</button>
+      <button class="btn btn-primary" id="btnSignup">Sign up free</button>
+      <button class="btn btn-ghost hidden" id="btnLogout">Log out</button>
+      <button class="nav-burger" id="navBurger" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="app">
+
+<!-- ===================== LANDING ===================== -->
+<section class="view" id="view-landing">
+  <div class="hero">
+    <div class="hero-copy">
+      <span class="hero-badge">55+ premium templates • ATS-friendly • Free to start</span>
+      <h1>Your Dream Job Starts With a Better Resume.</h1>
+      <p class="hero-sub">Create a professional, ATS-friendly resume in minutes. Choose from 55+ premium templates, fill in your details, customize your design, and download your CV instantly.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" id="heroCreateBtn">Create My Resume →</button>
+        <button class="btn btn-outline btn-lg" id="heroTemplatesBtn">Explore Templates</button>
+      </div>
+      <p class="hero-note">No credit card needed. Your data stays on your device in this demo build.</p>
+    </div>
+    <div class="hero-visual" id="heroVisual" aria-hidden="true"></div>
+  </div>
+
+  <div class="section" id="showcase">
+    <div class="section-head">
+      <h2>Templates hiring managers remember</h2>
+      <p>A few favourites from the library of 55.</p>
+    </div>
+    <div class="tpl-grid" id="showcaseGrid"></div>
+    <div class="center"><button class="btn btn-outline" id="viewAllTplBtn">View All Templates</button></div>
+  </div>
+
+  <div class="section" id="how">
+    <div class="section-head"><h2>How it works</h2><p>From blank page to finished CV in four steps.</p></div>
+    <div class="steps-grid">
+      <div class="step-card"><span class="step-num">1</span><h3>Enter Your Information</h3><p>Fill in guided forms — experience, education, skills, projects. No design skills needed.</p></div>
+      <div class="step-card"><span class="step-num">2</span><h3>Choose Your Perfect Template</h3><p>Browse 55 real templates by category, search, filter by ATS-friendly, and preview full-screen.</p></div>
+      <div class="step-card"><span class="step-num">3</span><h3>Customize Your Design</h3><p>Colors, fonts, spacing, margins, section order — the preview updates live as you type.</p></div>
+      <div class="step-card"><span class="step-num">4</span><h3>Download Your CV</h3><p>Print-ready A4 PDF with selectable text and clickable links. Or print straight from the browser.</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="features">
+    <div class="section-head"><h2>Everything you need to get hired</h2></div>
+    <div class="features-grid">
+      <div class="feat"><strong>55+ professional templates</strong><p>Genuinely different layouts — professional, modern, minimalist, creative, technical, academic and more.</p></div>
+      <div class="feat"><strong>ATS-friendly designs</strong><p>Standard headings, readable order and selectable text, plus a built-in ATS checker.</p></div>
+      <div class="feat"><strong>Live CV preview</strong><p>Every keystroke updates the document instantly. What you see is what you download.</p></div>
+      <div class="feat"><strong>Writing assistance</strong><p>On-device helpers for summaries, achievement bullets and skills — no data leaves your browser.</p></div>
+      <div class="feat"><strong>PDF downloads</strong><p>High-quality A4 or US Letter PDF from the real document — never a screenshot.</p></div>
+      <div class="feat"><strong>Multiple resumes</strong><p>Create, duplicate, rename and manage a CV for every application from your dashboard.</p></div>
+      <div class="feat"><strong>Cover letter builder</strong><p>Matching cover letters with the same template design, ready to download as PDF.</p></div>
+      <div class="feat"><strong>Autosave</strong><p>Every change saves automatically on your device. Refresh the page — your CV is still there.</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="categories">
+    <div class="section-head"><h2>Browse by category</h2></div>
+    <div class="cat-chips" id="categoryChips"></div>
+  </div>
+
+  <div class="section" id="testimonials">
+    <div class="section-head"><h2>Loved by job seekers</h2><p class="demo-note">Demo testimonials — replace with genuine user reviews before launch.</p></div>
+    <div class="testi-grid">
+      <blockquote class="testi"><p>"I rebuilt my CV in 20 minutes and got three interview calls the same week. The templates actually look like a designer made them."</p><cite>— Tanvir H., Software Engineer</cite></blockquote>
+      <blockquote class="testi"><p>"The ATS checker told me exactly what was missing. My old CV had no skills section at all — no wonder nobody replied."</p><cite>— Nusrat J., Marketing Graduate</cite></blockquote>
+      <blockquote class="testi"><p>"As a fresher I had almost nothing to write. The guided forms helped me turn my projects into real experience."</p><cite>— Sakib R., CSE Student</cite></blockquote>
+    </div>
+  </div>
+
+  <div class="section" id="faq">
+    <div class="section-head"><h2>Frequently asked questions</h2></div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+
+  <div class="cta-band">
+    <h2>Ready to create your future?</h2>
+    <p>Your next job starts with one resume.</p>
+    <button class="btn btn-primary btn-lg" data-create="1">Create My Resume →</button>
+  </div>
+</section>
+
+<!-- ===================== TEMPLATES ===================== -->
+<section class="view hidden" id="view-templates">
+  <div class="page-head">
+    <h1>Template Gallery</h1>
+    <p>55 real templates. Every preview is the actual template rendered with sample data.</p>
+  </div>
+  <div class="tpl-toolbar">
+    <input type="search" id="tplSearch" class="text-input" placeholder="Search templates… e.g. executive, minimal, tech">
+    <select id="tplCatFilter" class="select-input"></select>
+    <label class="check-inline"><input type="checkbox" id="tplAtsFilter"> ATS-friendly only</label>
+    <label class="check-inline"><input type="checkbox" id="tplFavOnly"> ★ Favorites</label>
+    <select id="tplSort" class="select-input">
+      <option value="name">Sort: Name A–Z</option>
+      <option value="cat">Sort: Category</option>
+      <option value="featured">Sort: Featured first</option>
+    </select>
+  </div>
+  <p class="tpl-count" id="tplCount"></p>
+  <div class="tpl-grid" id="tplGrid"></div>
+</section>
+
+<!-- ===================== EDITOR ===================== -->
+<section class="view hidden" id="view-editor">
+  <div class="editor-topbar">
+    <input type="text" id="editorTitle" class="editor-title-input" aria-label="CV title" value="Untitled CV">
+    <span class="save-state" id="saveState">Saved</span>
+    <div class="editor-actions">
+      <button class="btn btn-ghost btn-sm" id="btnEditorTemplates">Change template</button>
+      <button class="btn btn-ghost btn-sm" id="btnEditorDashboard">← Dashboard</button>
+      <button class="btn btn-outline btn-sm" id="btnPrint">Print</button>
+      <button class="btn btn-primary btn-sm" id="btnDownloadPdf">Download PDF</button>
+    </div>
+  </div>
+  <div class="editor-mode-toggle">
+    <button class="btn btn-sm active" id="modeEditBtn">Edit</button>
+    <button class="btn btn-sm" id="modePreviewBtn">Preview</button>
+  </div>
+  <div class="editor-layout">
+    <aside class="editor-panel" id="editorPanel">
+      <div class="panel-tabs">
+        <button class="panel-tab active" data-ptab="form">Content</button>
+        <button class="panel-tab" data-ptab="design">Design</button>
+        <button class="panel-tab" data-ptab="sections">Sections</button>
+        <button class="panel-tab" data-ptab="ats">ATS Check</button>
+      </div>
+
+      <div class="panel-pane" id="ptab-form">
+        <div class="step-nav" id="stepNav"></div>
+        <div id="stepPanels"></div>
+      </div>
+
+      <div class="panel-pane hidden" id="ptab-design">
+        <h3>Design</h3>
+        <label class="field"><span>Accent color</span><input type="color" id="designAccent" value="#4f46e5"></label>
+        <div class="swatches" id="designSwatches"></div>
+        <label class="field"><span>Font</span><select id="designFont" class="select-input">
+          <option value="">Template default</option>
+          <option value="inter">Inter</option><option value="jakarta">Plus Jakarta Sans</option>
+          <option value="manrope">Manrope</option><option value="serif">Georgia (serif)</option>
+          <option value="mono">JetBrains Mono</option>
+        </select></label>
+        <label class="field"><span>Name size (<span id="designNameSizeVal">28</span>px)</span><input type="range" id="designNameSize" min="20" max="40" value="28"></label>
+        <label class="field"><span>Body size (<span id="designBodySizeVal">11</span>pt)</span><input type="range" id="designBodySize" min="9" max="13" value="11"></label>
+        <label class="field"><span>Line height (<span id="designLineHeightVal">1.5</span>)</span><input type="range" id="designLineHeight" min="1.2" max="1.8" step="0.1" value="1.5"></label>
+        <label class="field"><span>Page margins (<span id="designMarginVal">18</span>mm)</span><input type="range" id="designMargin" min="10" max="25" value="18"></label>
+        <label class="field"><span>Section spacing (<span id="designSpacingVal">10</span>px)</span><input type="range" id="designSpacing" min="4" max="20" value="10"></label>
+        <label class="field"><span>Page size</span><select id="designPageSize" class="select-input"><option value="A4">A4</option><option value="Letter">US Letter</option></select></label>
+        <button class="btn btn-ghost" id="designReset">Reset design</button>
+        <p class="hint">Premium templates are unlocked in this demo build — the paywall is wired in the data model, not yet connected to a payment provider. See README.</p>
+      </div>
+
+      <div class="panel-pane hidden" id="ptab-sections">
+        <h3>Sections</h3>
+        <p class="hint">Hide, show and reorder sections. Switching templates never erases your information.</p>
+        <ul class="section-list" id="sectionList"></ul>
+      </div>
+
+      <div class="panel-pane hidden" id="ptab-ats">
+        <h3>ATS Compatibility</h3>
+        <div class="ats-score"><span id="atsScore">—</span><small>/ 100</small></div>
+        <p class="hint">An estimate, not a guarantee. ATS systems vary — this checks the things most of them agree on.</p>
+        <ul class="ats-list" id="atsList"></ul>
+        <label class="field"><span>Paste a job description to check keyword matches</span>
+        <textarea id="atsJobDesc" rows="5" placeholder="Paste the job description here…"></textarea></label>
+        <button class="btn btn-outline" id="atsCheckBtn">Check keywords</button>
+        <div id="atsKeywords"></div>
+      </div>
+    </aside>
+
+    <div class="editor-preview" id="editorPreview">
+      <div class="preview-toolbar">
+        <button class="btn btn-ghost btn-sm" id="zoomOut">−</button>
+        <span id="zoomLabel">100%</span>
+        <button class="btn btn-ghost btn-sm" id="zoomIn">+</button>
+        <button class="btn btn-ghost btn-sm" id="zoomFit">Fit</button>
+        <span class="preview-meta" id="previewMeta"></span>
+        <button class="btn btn-ghost btn-sm" id="btnFullscreen">⛶ Full screen</button>
+      </div>
+      <div class="preview-scroll" id="previewScroll">
+        <div class="preview-scale" id="previewScale"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DASHBOARD ===================== -->
+<section class="view hidden" id="view-dashboard">
+  <div class="page-head">
+    <h1 id="dashWelcome">Welcome back</h1>
+    <p id="dashSub">Your resumes, cover letters and account — in one place.</p>
+  </div>
+  <div class="dash-actions">
+    <button class="btn btn-primary" id="dashNewCv">+ Create New CV</button>
+    <button class="btn btn-outline" id="dashNewLetter">+ Create Cover Letter</button>
+    <button class="btn btn-ghost" id="dashLoadSample">Load sample CV</button>
+  </div>
+  <div class="stat-grid" id="dashStats"></div>
+  <h2 class="subhead">My Documents</h2>
+  <div class="doc-grid" id="docGrid"></div>
+  <p class="empty hidden" id="docEmpty">No CVs yet. Create your first one — it takes a few minutes.</p>
+  <h2 class="subhead">Cover Letters</h2>
+  <div class="doc-grid" id="letterGrid"></div>
+  <p class="empty hidden" id="letterEmpty">No cover letters yet.</p>
+  <h2 class="subhead">Recent Activity</h2>
+  <ul class="activity-list" id="recentList"></ul>
+  <h2 class="subhead">Account Settings</h2>
+  <div class="card settings-card">
+    <label class="field"><span>Name</span><input type="text" id="setName" class="text-input"></label>
+    <label class="field"><span>Email</span><input type="email" id="setEmail" class="text-input" disabled></label>
+    <button class="btn btn-outline" id="saveSettingsBtn">Save settings</button>
+    <button class="btn btn-ghost" id="deleteAccountBtn">Delete my demo account</button>
+    <p class="hint">Demo account — your data lives only in this browser. A real backend (Supabase) is documented in the README.</p>
+  </div>
+</section>
+
+<!-- ===================== COVER LETTER ===================== -->
+<section class="view hidden" id="view-cover">
+  <div class="page-head">
+    <h1>Cover Letter Builder</h1>
+    <p>Write a matching cover letter. The design follows your CV template.</p>
+  </div>
+  <div class="cover-layout">
+    <div class="cover-form card">
+      <label class="field"><span>Cover letter title</span><input type="text" id="clTitle" class="text-input"></label>
+      <div class="field-row">
+        <label class="field"><span>Your name</span><input type="text" id="clName" class="text-input"></label>
+        <label class="field"><span>Your email</span><input type="email" id="clEmail" class="text-input"></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>City</span><input type="text" id="clCity" class="text-input"></label>
+        <label class="field"><span>Phone</span><input type="text" id="clPhone" class="text-input"></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>Recipient name</span><input type="text" id="clRecipient" class="text-input" placeholder="Hiring Manager"></label>
+        <label class="field"><span>Company</span><input type="text" id="clCompany" class="text-input"></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>Job title</span><input type="text" id="clJob" class="text-input"></label>
+        <label class="field"><span>Date</span><input type="date" id="clDate" class="text-input"></label>
+      </div>
+      <label class="field"><span>Opening paragraph</span><textarea id="clOpening" rows="3" class="text-input"></textarea></label>
+      <label class="field"><span>Main body</span><textarea id="clBody" rows="6" class="text-input"></textarea></label>
+      <label class="field"><span>Closing paragraph</span><textarea id="clClosing" rows="3" class="text-input"></textarea></label>
+      <div class="btn-row">
+        <button class="btn btn-outline" id="clAiBtn">✦ Generate with writing helper</button>
+        <button class="btn btn-outline" id="clSaveBtn">Save</button>
+        <button class="btn btn-primary" id="clDownloadBtn">Download PDF</button>
+        <button class="btn btn-ghost" id="clBackBtn">← Dashboard</button>
+      </div>
+      <p class="hint">Writing helper is an on-device template assistant, not a live AI model. Connect an AI API (see README) for full AI generation.</p>
+    </div>
+    <div class="cover-preview" id="clPreview"></div>
+  </div>
+</section>
+
+<!-- ===================== ADMIN ===================== -->
+<section class="view hidden" id="view-admin">
+  <div class="page-head">
+    <h1>Admin Dashboard</h1>
+    <p>Demo admin — stats come from this browser's local data. User management needs the backend (see README).</p>
+  </div>
+  <div class="stat-grid" id="adminStats"></div>
+  <h2 class="subhead">Template Management</h2>
+  <p class="hint">Toggle a template's status. Changes apply to the gallery immediately.</p>
+  <div class="admin-tpl-list" id="adminTplList"></div>
+  <h2 class="subhead">Website Settings</h2>
+  <div class="card settings-card">
+    <label class="field"><span>Website name</span><input type="text" id="adminBrand" class="text-input"></label>
+    <label class="field"><span>Brand accent color</span><input type="color" id="adminAccent" value="#4f46e5"></label>
+    <button class="btn btn-outline" id="adminSaveBtn">Save settings</button>
+  </div>
+  <h2 class="subhead">User Management</h2>
+  <div class="card"><p>Not available in this demo build — there is no server, so there are no other users to manage. With Supabase connected, this panel lists registered users with suspend/reactivate/delete actions. See README.</p></div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col"><strong>CVora</strong><p>Create Your Future. One Resume at a Time.</p></div>
+    <div class="footer-col"><strong>Product</strong><a href="#" data-nav="templates">Template Gallery</a><a href="#" data-nav="landing" data-anchor="features">Features</a><a href="#" data-nav="landing" data-anchor="faq">FAQ</a></div>
+    <div class="footer-col"><strong>Company</strong><a href="#" data-legal="about">About Us</a><a href="#" data-legal="contact">Contact</a><a href="#" data-legal="help">Help Center</a></div>
+    <div class="footer-col"><strong>Legal</strong><a href="#" data-legal="privacy">Privacy Policy</a><a href="#" data-legal="terms">Terms of Service</a></div>
+  </div>
+  <p class="footer-base">© 2026 CVora — demo build. Data is stored locally in your browser.</p>
+</footer>
+
+<!-- ===================== AUTH MODAL ===================== -->
+<div class="modal hidden" id="authModal">
+  <div class="modal-card">
+    <button class="modal-x" data-close="authModal">×</button>
+    <h2 id="authTitle">Welcome to CVora</h2>
+    <p class="hint" id="authHint">Demo account — stored only in this browser, not on a server.</p>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-auth-tab="login">Log in</button>
+      <button class="auth-tab" data-auth-tab="register">Sign up</button>
+      <button class="auth-tab" data-auth-tab="forgot">Forgot password</button>
+    </div>
+    <div id="authError" class="form-error hidden"></div>
+    <label class="field hidden" id="authNameField"><span>Full name</span><input type="text" id="authName" class="text-input"></label>
+    <label class="field"><span>Email</span><input type="email" id="authEmail" class="text-input" autocomplete="email"></label>
+    <label class="field" id="authPassField"><span>Password</span><input type="password" id="authPass" class="text-input" autocomplete="current-password"></label>
+    <label class="field hidden" id="authNewPassField"><span>New password</span><input type="password" id="authNewPass" class="text-input"></label>
+    <button class="btn btn-primary btn-block" id="authSubmit">Log in</button>
+    <p class="hint center">Google sign-in is not connected in this build — it needs OAuth credentials. See README.</p>
+  </div>
+</div>
+
+<!-- ===================== TEMPLATE PREVIEW MODAL ===================== -->
+<div class="modal hidden" id="tplModal">
+  <div class="modal-card modal-wide">
+    <button class="modal-x" data-close="tplModal">×</button>
+    <div class="tpl-modal-head">
+      <div><h2 id="tplModalName"></h2><p id="tplModalMeta"></p></div>
+      <div class="btn-row">
+        <button class="btn btn-outline" id="tplModalFav">☆ Favorite</button>
+        <button class="btn btn-primary" id="tplModalUse">Use This Template</button>
+      </div>
+    </div>
+    <div class="tpl-modal-preview" id="tplModalPreview"></div>
+  </div>
+</div>
+
+<!-- ===================== LEGAL MODAL ===================== -->
+<div class="modal hidden" id="legalModal">
+  <div class="modal-card">
+    <button class="modal-x" data-close="legalModal">×</button>
+    <h2 id="legalTitle"></h2>
+    <div id="legalBody" class="legal-body"></div>
+  </div>
+</div>
+
+<div class="toast hidden" id="toast"></div>
+<div id="printRoot"></div>
+
+<script src="js/templates.js"></script>
+<script src="js/store.js"></script>
+<script src="js/render.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

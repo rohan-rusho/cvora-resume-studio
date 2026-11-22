@@ -1,0 +1,109 @@
+/* CVora template engine styles — the actual CV document.
+   One renderer, 55 configs: layout, header, font, accent, skills, dividers. */
+
+.cv-doc {
+  width: 210mm; min-height: 297mm; background: #fff; color: #1e293b;
+  padding: var(--cv-margin, 18mm); font-size: var(--cv-body-size, 11pt);
+  line-height: var(--cv-line-height, 1.5); box-sizing: border-box;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, .12); margin: 0 auto;
+  --cv-accent: #4f46e5;
+}
+.cv-doc a { color: var(--cv-accent); text-decoration: none; }
+.cv-doc p { margin: 0 0 .45em; }
+
+/* fonts */
+.font-inter { font-family: Inter, system-ui, sans-serif; }
+.font-jakarta { font-family: "Plus Jakarta Sans", Inter, sans-serif; }
+.font-manrope { font-family: Manrope, Inter, sans-serif; }
+.font-serif { font-family: Georgia, "Times New Roman", serif; }
+.font-mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+/* header */
+.cv-header { margin-bottom: calc(var(--cv-spacing, 10px) + 4px); }
+.cv-name { font-size: var(--cv-name-size, 28px); line-height: 1.1; margin: 0; color: #0f172a; letter-spacing: -.01em; }
+.cv-title { font-size: 1.15em; color: var(--cv-accent); font-weight: 600; margin: .15em 0 .35em; }
+.cv-contact { font-size: .92em; color: #475569; margin: 0; }
+.cv-head-main { display: flex; gap: 14px; align-items: flex-start; }
+.cv-head-main > div { flex: 1; min-width: 0; }
+.header-center .cv-head-main { flex-direction: column; align-items: center; text-align: center; }
+.header-center .cv-name, .header-center .cv-title, .header-center .cv-contact { text-align: center; }
+.cv-head-split { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.cv-contact-right { text-align: right; max-width: 45%; }
+.header-banner .cv-header, .layout-banner .cv-header {
+  background: var(--cv-accent); color: #fff; margin: calc(var(--cv-margin, 18mm) * -1) calc(var(--cv-margin, 18mm) * -1) 0;
+  padding: var(--cv-margin, 18mm); padding-bottom: 14px;
+}
+.header-banner .cv-name, .layout-banner .cv-name { color: #fff; }
+.header-banner .cv-title, .layout-banner .cv-title { color: rgba(255, 255, 255, .85); }
+.header-banner .cv-contact, .layout-banner .cv-contact { color: rgba(255, 255, 255, .8); }
+.header-banner .cv-contact a, .layout-banner .cv-contact a { color: #fff; }
+.header-banner .cv-body, .layout-banner .cv-body { margin-top: 14px; }
+
+/* photo */
+.cv-photo { width: 76px; height: 76px; object-fit: cover; flex: none; }
+.photo-round { border-radius: 50%; }
+.photo-square { border-radius: 6px; }
+
+/* sections */
+.cv-section { margin-bottom: var(--cv-spacing, 10px); break-inside: avoid; }
+.cv-h2 { font-size: 1.08em; margin: 0 0 .45em; color: #0f172a; letter-spacing: .02em; }
+.hd-upper .cv-h2 { text-transform: uppercase; letter-spacing: .12em; font-size: .98em; }
+.hd-accent .cv-h2 { color: var(--cv-accent); }
+.hd-boxed .cv-h2 { background: #f1f5f9; border-left: 3px solid var(--cv-accent); padding: .25em .5em; }
+.divider-line .cv-h2 { border-bottom: 1px solid #e2e8f0; padding-bottom: .25em; }
+.divider-accent .cv-h2 { border-bottom: 2px solid var(--cv-accent); padding-bottom: .25em; }
+.divider-double .cv-h2 { border-bottom: 3px double #94a3b8; padding-bottom: .25em; }
+.divider-none .cv-h2 { border-bottom: 0; }
+.cv-summary, .cv-objective { margin-bottom: .4em; }
+.cv-meta-line { font-size: .92em; color: #64748b; }
+
+/* items */
+.cv-item { margin-bottom: .55em; break-inside: avoid; }
+.cv-item-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.cv-item-title { font-weight: 700; color: #0f172a; }
+.cv-item-date { font-size: .9em; color: #64748b; white-space: nowrap; }
+.cv-item-sub { font-size: .95em; color: #475569; margin-bottom: .15em; }
+.cv-item-desc { font-size: .98em; }
+.cv-bullets { margin: .2em 0 .4em; padding-left: 1.1em; }
+.cv-bullets li { margin-bottom: .15em; }
+
+/* skills */
+.cv-skill-line { margin-bottom: .3em; }
+.cv-skills-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.cv-chip { display: inline-block; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 999px; padding: .15em .7em; font-size: .92em; }
+.cv-skill-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: .95em; }
+.cv-skill-name { flex: 0 0 42%; }
+.cv-bar { flex: 1; height: 6px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+.cv-bar span { display: block; height: 100%; background: var(--cv-accent); border-radius: 999px; }
+.cv-skill-dot { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: .95em; }
+.cv-dots { display: inline-flex; gap: 3px; }
+.cv-dot { width: 8px; height: 8px; border-radius: 50%; background: #e2e8f0; display: inline-block; }
+.cv-dot.on { background: var(--cv-accent); }
+
+/* layouts */
+.cv-body { display: block; }
+.cv-two-col { display: grid; grid-template-columns: 1.9fr 1fr; gap: 22px; }
+.cv-rail .cv-section { margin-bottom: calc(var(--cv-spacing, 10px) * .8); }
+.layout-side-l .cv-body, .layout-side-r .cv-body { display: grid; grid-template-columns: 62mm 1fr; gap: 0; }
+.layout-side-r .cv-body { grid-template-columns: 1fr 62mm; }
+.cv-sidebar { background: #f1f5f9; padding: 12px; border-radius: 4px; }
+.layout-side-l .cv-sidebar { margin-right: 16px; }
+.layout-side-r .cv-sidebar { margin-left: 16px; }
+.cv-sidebar .cv-h2 { font-size: .95em; }
+.cv-sidebar .cv-section { margin-bottom: 12px; }
+.cv-side-h { font-size: .95em; text-transform: uppercase; letter-spacing: .1em; color: var(--cv-accent); margin: 0 0 .4em; }
+.cv-side-contact p { font-size: .88em; color: #475569; word-break: break-word; }
+.cv-sidebar .cv-skill-name { flex-basis: 48%; }
+.cv-sidebar .cv-chip { background: #fff; }
+
+/* thumbnails: the doc is full A4 width (794px @96dpi); JS scales it to fit */
+.cv-thumb-holder { position: relative; overflow: hidden; background: #fff; }
+.cv-thumb-holder .cv-doc { position: absolute; top: 0; left: 0; transform-origin: top left; box-shadow: none; margin: 0; }
+.cv-thumb { width: 794px; }
+
+/* print */
+.cv-doc.for-print { box-shadow: none; width: 210mm; }
+@media print {
+  .cv-doc { box-shadow: none; }
+  .cv-section, .cv-item { break-inside: avoid; }
+}
