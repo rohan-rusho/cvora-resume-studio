@@ -63,7 +63,7 @@
     ["Can I create multiple CVs?", "Yes — create one per application, duplicate any CV to make a variation, and manage them all from your dashboard."],
     ["Can I edit my CV later?", "Yes. Every change autosaves on your device, so you can close the tab and come back later."],
     ["Can I use my own profile photo?", "Yes, upload one in the Personal step. It only shows on templates designed with a photo."],
-    ["Are there free templates?", "In this demo build all 55 templates are free to use. The data model supports Free/Premium flags for a future paywall."],
+    ["Are there free templates?", "In this demo build all 100 templates are free to use. The data model supports Free/Premium flags for a future paywall."],
     ["Can I create a cover letter?", "Yes — the Cover Letter Builder matches your CV template and downloads as PDF too."],
     ["Is my personal information secure?", "In this build your data never leaves your browser — it is stored in localStorage on your device. A real backend with Supabase is documented in the README."],
     ["Can I change my CV design after creating it?", "Any time. Switch templates, colors, fonts or section order — your information is never erased by a design change."]
@@ -85,7 +85,8 @@
       var b = document.createElement("button");
       b.className = "cat-chip";
       b.type = "button";
-      b.textContent = cat;
+      var count = window.CVORA_TEMPLATES.filter(function (t) { return t.cat === cat; }).length;
+      b.textContent = cat + " (" + count + ")";
       b.addEventListener("click", function () { galleryFilter.cat = cat; showView("templates"); });
       chips.appendChild(b);
     });
@@ -568,6 +569,7 @@
 
     /* dashboard */
     $("dashNewCv").addEventListener("click", function () { useTemplate("executive-classic"); });
+    $("dashUploadCv").addEventListener("click", function () { window.CvoraImport.open("new"); });
     $("dashNewLetter").addEventListener("click", function () {
       var letter = store.newLetter(store.resumes[0] || null);
       openCoverLetter(letter.id);

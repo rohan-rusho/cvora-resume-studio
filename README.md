@@ -2,27 +2,53 @@
 
 **Create Your Future. One Resume at a Time.**
 
-A premium CV & resume builder: 55 real templates, a guided multi-step editor,
+A premium CV & resume builder: 100 real templates, a guided multi-step editor,
 live preview, design customization, ATS checker, cover letter builder, PDF
-export and a personal dashboard. Static web app — no build step, no dependencies
-beyond Google Fonts.
+export, CV upload & import, and a personal dashboard. Static web app — no build
+step, no dependencies beyond Google Fonts.
 
-## What works in this build (v1.1.0)
+## What is new in v1.2.0
 
-- **55 templates, genuinely different** — Professional (8), Modern (8),
+- **100 templates** — 45 new ones in 9 new categories: Executive (5),
+  Healthcare (5), Legal (5), Engineering (5), Sales (5), Finance (5),
+  Education (5), Hospitality (5), Freelance (5). Category chips on the
+  landing page now show the count per category.
+- **Upload an existing CV** (`js/import.js`) — upload a PDF, Word (.docx),
+  TXT or Markdown file, or paste the text, and CVora reads it into the
+  editor. Name, title, contact details, summary, jobs, education, skills,
+  projects, certifications and languages are parsed from the text. From the
+  editor it **replaces the current CV's content** (template and design are
+  kept); from the dashboard it creates a brand-new CV. Everything stays
+  editable afterwards. PDF uses pdf.js and DOCX uses mammoth.js, loaded on
+  demand from a CDN — TXT and pasted text work fully offline. Nothing is
+  uploaded to a server.
+- **Word (.doc) export** — download an editable Word document that opens in
+  Microsoft Word, LibreOffice and Google Docs, keeping the CV design.
+  Export now covers PDF, PNG, JPG, DOC, TXT, HTML and JSON.
+- **Next / Previous buttons** — every editor step now has Previous / Next at
+  the bottom, with a "Step X of 9" counter. Next moves to the next section
+  automatically and scrolls to the top; the last step becomes "Review your
+  CV" and opens the preview. New users no longer have to scroll up to find
+  the step buttons.
+
+## What works in this build (v1.2.0)
+
+- **100 templates, genuinely different** — Professional (8), Modern (8),
   Minimalist (7), Creative (7), Technology (6), Student (5), Academic (4),
-  Specialized (5), Premium (5). Each has its own layout, header, font,
-  accent, skill style, divider and photo treatment. Every thumbnail is the
-  real template rendered with sample data — never a generic image.
+  Specialized (5), Premium (5), Executive (5), Healthcare (5), Legal (5),
+  Engineering (5), Sales (5), Finance (5), Education (5), Hospitality (5),
+  Freelance (5). Each has its own layout, header, font, accent, skill
+  style, divider and photo treatment. Every thumbnail is the real template
+  rendered with sample data — never a generic image.
 - **Full customization** — override any template's layout (one column, two
   columns, sidebar left/right, banner), header style, accent color, sidebar
   color, page background, 11 fonts, skills display (text / bars / dots /
   chips), section heading style, divider style, photo shape, name/body size,
   line height, margins, spacing, A4 / US Letter — plus reset. Dark mode for
   the app itself.
-- **Multi-format export** — PDF (print, real document), PNG, JPG, plain-text
-  TXT, standalone HTML, and JSON backup with import. PNG/JPG render the
-  actual document (web fonts fall back to system fonts in the image — a
+- **Multi-format export** — PDF (print, real document), PNG, JPG, Word (.doc),
+  plain-text TXT, standalone HTML, and JSON backup with import. PNG/JPG render
+  the actual document (web fonts fall back to system fonts in the image — a
   browser limitation, stated in the UI).
 - **Multi-step editor** — Personal, Summary, Experience, Education, Skills,
   Projects, Certifications, Languages, Additional sections. Add / edit /
@@ -112,11 +138,13 @@ To turn this into the full product described in the brief:
 cvora-resume-studio/
   index.html            — landing, gallery, editor, dashboard, cover, admin
   css/style.css         — app chrome, landing, editor, print
-  css/templates.css     — the CV document: 55 configs, one renderer
-  js/templates.js       — all 55 template definitions
+  css/templates.css     — the CV document: 100 configs, one renderer
+  js/templates.js       — all 100 template definitions
   js/store.js           — local data: resumes, letters, demo auth, admin flags
   js/render.js          — CV renderer (preview, thumbnails, print)
   js/editor.js          — wizard, design, sections, ATS, writing helpers
+  js/import.js          — CV upload & import (PDF/DOCX/TXT/paste → editable CV)
+  js/export.js          — PDF/PNG/JPG/DOC/TXT/HTML/JSON export
   js/app.js             — views, gallery, dashboard, cover letters, admin
 ```
 

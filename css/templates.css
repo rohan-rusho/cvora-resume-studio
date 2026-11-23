@@ -1,5 +1,5 @@
 /* CVora template engine styles — the actual CV document.
-   One renderer, 55 configs: layout, header, font, accent, skills, dividers. */
+   One renderer, 100 configs: layout, header, font, accent, skills, dividers. */
 
 .cv-doc {
   width: 210mm; min-height: 297mm; background: var(--cv-bg, #fff); color: #1e293b;

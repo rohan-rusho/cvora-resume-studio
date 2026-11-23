@@ -1,4 +1,4 @@
-/* CVora template library — 55 genuinely different templates.
+/* CVora template library — 100 genuinely different templates.
    Each template is a distinct combination of layout, header, font, accent,
    skill style, divider, photo treatment and heading style. The renderer in
    render.js turns these configs into real CV documents. */
@@ -84,10 +84,73 @@
     { id: "swiss-precision", name: "Swiss Precision", cat: "Premium", desc: "Grid-driven, red accent, exact.", ats: true, premium: true, layout: "two-col", header: "split", font: "inter", accent: "#dc2626", skill: "text", divider: "line", photo: "none", heading: "boxed" },
     { id: "editorial-classic", name: "Editorial Classic", cat: "Premium", desc: "Magazine typography, editorial rules.", ats: false, premium: true, layout: "single", header: "center", font: "serif", accent: "#111827", skill: "text", divider: "double", photo: "none", heading: "upper" },
     { id: "premium-sidebar", name: "Premium Sidebar", cat: "Premium", desc: "Dark sidebar, gold accents, luxe.", ats: false, premium: true, layout: "side-l", header: "left", font: "jakarta", accent: "#a16207", skill: "bars", divider: "none", photo: "round", heading: "accent" },
-    { id: "monochrome-executive", name: "Monochrome Executive", cat: "Premium", desc: "Black and white only, total restraint.", ats: true, premium: true, layout: "single", header: "left", font: "inter", accent: "#000000", skill: "text", divider: "double", photo: "none", heading: "boxed" }
+    { id: "monochrome-executive", name: "Monochrome Executive", cat: "Premium", desc: "Black and white only, total restraint.", ats: true, premium: true, layout: "single", header: "left", font: "inter", accent: "#000000", skill: "text", divider: "double", photo: "none", heading: "boxed" },
+
+    /* ---------- J. Executive (5) ---------- */
+    { id: "boardroom-leader", name: "Boardroom Leader", cat: "Executive", desc: "C-suite gravitas — serif, gold rule, quiet authority.", ats: true, premium: true, layout: "single", header: "center", font: "playfair", accent: "#92400e", skill: "text", divider: "double", photo: "none", heading: "upper" },
+    { id: "c-suite-profile", name: "C-Suite Profile", cat: "Executive", desc: "Board-ready profile with impact metrics up front.", ats: true, premium: true, layout: "banner", header: "banner", font: "jakarta", accent: "#1e3a5f", skill: "bars", divider: "line", photo: "round", heading: "upper" },
+    { id: "chairman-classic", name: "Chairman Classic", cat: "Executive", desc: "Traditional top-level CV, navy serif, double rules.", ats: true, premium: false, layout: "single", header: "left", font: "serif", accent: "#172554", skill: "text", divider: "double", photo: "none", heading: "upper" },
+    { id: "director-brief", name: "Director Brief", cat: "Executive", desc: "One-page director summary, sidebar achievements.", ats: true, premium: false, layout: "side-r", header: "left", font: "montserrat", accent: "#0f766e", skill: "dots", divider: "accent", photo: "square", heading: "accent" },
+    { id: "vp-leadership", name: "VP Leadership", cat: "Executive", desc: "VP-grade two-column with a leadership rail.", ats: false, premium: true, layout: "two-col", header: "split", font: "inter", accent: "#7c2d12", skill: "bars", divider: "line", photo: "none", heading: "boxed" },
+
+    /* ---------- K. Healthcare (5) ---------- */
+    { id: "nurse-professional", name: "Nurse Professional", cat: "Healthcare", desc: "Calm clinical teal, certifications first.", ats: true, premium: false, layout: "single", header: "left", font: "inter", accent: "#0e7490", skill: "text", divider: "accent", photo: "round", heading: "upper" },
+    { id: "physician-profile", name: "Physician Profile", cat: "Healthcare", desc: "Clinical, precise, publications and training led.", ats: true, premium: true, layout: "single", header: "center", font: "serif", accent: "#155e75", skill: "text", divider: "double", photo: "none", heading: "upper" },
+    { id: "pharmacist-career", name: "Pharmacist Career", cat: "Healthcare", desc: "Clean two-column with a credentials rail.", ats: true, premium: false, layout: "two-col", header: "split", font: "jakarta", accent: "#166534", skill: "dots", divider: "line", photo: "none", heading: "accent" },
+    { id: "therapist-warm", name: "Therapist Warm", cat: "Healthcare", desc: "Warm, human, soft accent — care-first design.", ats: true, premium: false, layout: "single", header: "center", font: "manrope", accent: "#9d174d", skill: "chips", divider: "none", photo: "round", heading: "plain" },
+    { id: "medical-admin", name: "Medical Admin", cat: "Healthcare", desc: "Structured admin layout, sidebar skills.", ats: true, premium: false, layout: "side-l", header: "left", font: "roboto", accent: "#1d4ed8", skill: "bars", divider: "line", photo: "none", heading: "upper" },
+
+    /* ---------- L. Legal (5) ---------- */
+    { id: "attorney-classic", name: "Attorney Classic", cat: "Legal", desc: "Formal serif, bar admissions up front.", ats: true, premium: true, layout: "single", header: "center", font: "serif", accent: "#1c1917", skill: "text", divider: "double", photo: "none", heading: "upper" },
+    { id: "paralegal-pro", name: "Paralegal Pro", cat: "Legal", desc: "Precise, matter-led, tabular dates.", ats: true, premium: false, layout: "single", header: "left", font: "inter", accent: "#334155", skill: "text", divider: "line", photo: "none", heading: "plain" },
+    { id: "counsel-modern", name: "Counsel Modern", cat: "Legal", desc: "Modern in-house counsel, navy sidebar.", ats: false, premium: true, layout: "side-l", header: "left", font: "jakarta", accent: "#172554", skill: "bars", divider: "none", photo: "square", heading: "accent" },
+    { id: "law-graduate", name: "Law Graduate", cat: "Legal", desc: "Education and moots first, bright and clean.", ats: true, premium: false, layout: "two-col", header: "center", font: "manrope", accent: "#7c3aed", skill: "chips", divider: "accent", photo: "none", heading: "accent" },
+    { id: "legal-assistant", name: "Legal Assistant", cat: "Legal", desc: "Support-role CV, skills chips, warm gray.", ats: true, premium: false, layout: "single", header: "split", font: "lato", accent: "#57534e", skill: "chips", divider: "line", photo: "round", heading: "upper" },
+
+    /* ---------- M. Engineering (5) ---------- */
+    { id: "civil-engineer", name: "Civil Engineer", cat: "Engineering", desc: "Project-led, site experience first, slate blue.", ats: true, premium: false, layout: "single", header: "left", font: "inter", accent: "#0369a1", skill: "bars", divider: "accent", photo: "none", heading: "upper" },
+    { id: "mechanical-engineer", name: "Mechanical Engineer", cat: "Engineering", desc: "Technical, metric-led, mono details.", ats: true, premium: false, layout: "two-col", header: "split", font: "mono", accent: "#374151", skill: "dots", divider: "line", photo: "none", heading: "accent" },
+    { id: "electrical-engineer", name: "Electrical Engineer", cat: "Engineering", desc: "Amber accent, systems and circuits focus.", ats: true, premium: false, layout: "single", header: "center", font: "jakarta", accent: "#b45309", skill: "text", divider: "double", photo: "none", heading: "upper" },
+    { id: "qa-engineer", name: "QA Engineer", cat: "Engineering", desc: "Quality-first, testing tools in a sidebar.", ats: true, premium: false, layout: "side-r", header: "left", font: "roboto", accent: "#15803d", skill: "chips", divider: "none", photo: "none", heading: "plain" },
+    { id: "engineering-manager", name: "Engineering Manager", cat: "Engineering", desc: "Team and delivery led, dark sidebar.", ats: false, premium: true, layout: "side-l", header: "banner", font: "montserrat", accent: "#0f172a", skill: "bars", divider: "none", photo: "round", heading: "boxed" },
+
+    /* ---------- N. Sales (5) ---------- */
+    { id: "sales-manager", name: "Sales Manager", cat: "Sales", desc: "Quota-busting numbers up front, bold red accent.", ats: true, premium: false, layout: "banner", header: "banner", font: "poppins", accent: "#b91c1c", skill: "bars", divider: "none", photo: "none", heading: "accent" },
+    { id: "account-executive", name: "Account Executive", cat: "Sales", desc: "Deal-led, client wins first, navy + gold.", ats: true, premium: true, layout: "single", header: "split", font: "jakarta", accent: "#92400e", skill: "dots", divider: "accent", photo: "round", heading: "upper" },
+    { id: "business-developer", name: "Business Developer", cat: "Sales", desc: "Growth-focused, pipeline metrics, green.", ats: true, premium: false, layout: "two-col", header: "left", font: "inter", accent: "#166534", skill: "text", divider: "line", photo: "none", heading: "accent" },
+    { id: "sales-representative", name: "Sales Representative", cat: "Sales", desc: "Field sales, territory wins, bright and direct.", ats: true, premium: false, layout: "single", header: "center", font: "manrope", accent: "#ea580c", skill: "chips", divider: "accent", photo: "none", heading: "plain" },
+    { id: "retail-manager", name: "Retail Manager", cat: "Sales", desc: "Store leadership, team size and sales led.", ats: true, premium: false, layout: "side-l", header: "left", font: "lato", accent: "#9d174d", skill: "bars", divider: "line", photo: "square", heading: "upper" },
+
+    /* ---------- O. Finance (5) ---------- */
+    { id: "accountant-pro", name: "Accountant Pro", cat: "Finance", desc: "Ledger-clean, qualifications first, forest green.", ats: true, premium: false, layout: "single", header: "left", font: "inter", accent: "#14532d", skill: "text", divider: "line", photo: "none", heading: "upper" },
+    { id: "financial-analyst", name: "Financial Analyst", cat: "Finance", desc: "Models and metrics led, two-column, steel blue.", ats: true, premium: false, layout: "two-col", header: "split", font: "jakarta", accent: "#1e40af", skill: "bars", divider: "accent", photo: "none", heading: "accent" },
+    { id: "auditor-precise", name: "Auditor Precise", cat: "Finance", desc: "Exact, tabular, double rules, serif headings.", ats: true, premium: true, layout: "single", header: "center", font: "serif", accent: "#292524", skill: "text", divider: "double", photo: "none", heading: "upper" },
+    { id: "banker-profile", name: "Banker Profile", cat: "Finance", desc: "Private banking polish, sidebar credentials.", ats: false, premium: true, layout: "side-r", header: "left", font: "playfair", accent: "#172554", skill: "dots", divider: "none", photo: "round", heading: "boxed" },
+    { id: "tax-specialist", name: "Tax Specialist", cat: "Finance", desc: "Compliance-led, clean single column, slate.", ats: true, premium: false, layout: "single", header: "split", font: "opensans", accent: "#475569", skill: "text", divider: "line", photo: "none", heading: "plain" },
+
+    /* ---------- P. Education (5) ---------- */
+    { id: "teacher-classic", name: "Teacher Classic", cat: "Education", desc: "Warm, classroom-led, friendly teal.", ats: true, premium: false, layout: "single", header: "center", font: "manrope", accent: "#0d9488", skill: "chips", divider: "accent", photo: "round", heading: "accent" },
+    { id: "lecturer-academic", name: "Lecturer Academic", cat: "Education", desc: "Teaching and research in balance, serif.", ats: true, premium: false, layout: "single", header: "left", font: "serif", accent: "#3730a3", skill: "text", divider: "double", photo: "none", heading: "upper" },
+    { id: "trainer-corporate", name: "Corporate Trainer", cat: "Education", desc: "Workshops and outcomes led, amber accent.", ats: true, premium: false, layout: "banner", header: "banner", font: "poppins", accent: "#b45309", skill: "bars", divider: "none", photo: "none", heading: "accent" },
+    { id: "professor-scholar", name: "Professor Scholar", cat: "Education", desc: "Publications-led, classic academic weight.", ats: true, premium: true, layout: "single", header: "center", font: "playfair", accent: "#1e3a5f", skill: "text", divider: "double", photo: "none", heading: "upper" },
+    { id: "tutor-friendly", name: "Tutor Friendly", cat: "Education", desc: "Subjects and results first, bright and warm.", ats: true, premium: false, layout: "two-col", header: "left", font: "lato", accent: "#db2777", skill: "dots", divider: "line", photo: "round", heading: "plain" },
+
+    /* ---------- Q. Hospitality (5) ---------- */
+    { id: "chef-culinary", name: "Chef Culinary", cat: "Hospitality", desc: "Kitchen-led, cuisine specialties, warm charcoal.", ats: true, premium: false, layout: "single", header: "left", font: "manrope", accent: "#7c2d12", skill: "chips", divider: "accent", photo: "round", heading: "accent" },
+    { id: "hotel-manager", name: "Hotel Manager", cat: "Hospitality", desc: "Guest experience led, elegant sidebar.", ats: false, premium: true, layout: "side-l", header: "banner", font: "playfair", accent: "#78350f", skill: "bars", divider: "none", photo: "square", heading: "boxed" },
+    { id: "event-coordinator", name: "Event Coordinator", cat: "Hospitality", desc: "Events and logistics first, vibrant violet.", ats: true, premium: false, layout: "banner", header: "banner", font: "jakarta", accent: "#6d28d9", skill: "chips", divider: "none", photo: "none", heading: "accent" },
+    { id: "travel-agent", name: "Travel Agent", cat: "Hospitality", desc: "Destinations and languages led, sky blue.", ats: true, premium: false, layout: "two-col", header: "split", font: "inter", accent: "#0284c7", skill: "text", divider: "line", photo: "none", heading: "upper" },
+    { id: "customer-service-pro", name: "Customer Service Pro", cat: "Hospitality", desc: "Service metrics led, friendly green.", ats: true, premium: false, layout: "single", header: "center", font: "opensans", accent: "#15803d", skill: "dots", divider: "accent", photo: "round", heading: "plain" },
+
+    /* ---------- R. Freelance (5) ---------- */
+    { id: "freelancer-flex", name: "Freelancer Flex", cat: "Freelance", desc: "Clients and projects first, modern and open.", ats: true, premium: false, layout: "single", header: "left", font: "jakarta", accent: "#0891b2", skill: "chips", divider: "accent", photo: "round", heading: "accent" },
+    { id: "consultant-strategy", name: "Strategy Consultant", cat: "Freelance", desc: "Engagements led, sharp navy, serif name.", ats: true, premium: true, layout: "single", header: "split", font: "serif", accent: "#1e3a5f", skill: "text", divider: "double", photo: "none", heading: "upper" },
+    { id: "contractor-skilled", name: "Skilled Contractor", cat: "Freelance", desc: "Tickets and trades first, practical and bold.", ats: true, premium: false, layout: "two-col", header: "left", font: "roboto", accent: "#9a3412", skill: "bars", divider: "line", photo: "none", heading: "upper" },
+    { id: "remote-worker", name: "Remote Worker", cat: "Freelance", desc: "Distributed teams, tools and time zones.", ats: true, premium: false, layout: "side-r", header: "left", font: "mono", accent: "#0f766e", skill: "dots", divider: "none", photo: "none", heading: "plain" },
+    { id: "creative-freelancer", name: "Creative Freelancer", cat: "Freelance", desc: "Portfolio-first, bold color, big name.", ats: false, premium: true, layout: "banner", header: "banner", font: "montserrat", accent: "#be123c", skill: "chips", divider: "none", photo: "square", heading: "boxed" }
   ];
 
-  var CATEGORIES = ["All", "Professional", "Modern", "Minimalist", "Creative", "Technology", "Student", "Academic", "Specialized", "Premium"];
+  var CATEGORIES = ["All", "Professional", "Modern", "Minimalist", "Creative", "Technology", "Student", "Academic", "Specialized", "Premium", "Executive", "Healthcare", "Legal", "Engineering", "Sales", "Finance", "Education", "Hospitality", "Freelance"];
 
   window.CVORA_TEMPLATES = TEMPLATES;
   window.CVORA_CATEGORIES = CATEGORIES;

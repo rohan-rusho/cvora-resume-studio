@@ -1,4 +1,4 @@
-/* CVora export — PDF (via print), PNG, JPG, TXT, standalone HTML and JSON.
+/* CVora export — PDF (via print), PNG, JPG, DOC (Word), TXT, standalone HTML and JSON.
    PNG/JPG rasterize the real CV document with SVG foreignObject + canvas.
    Note: web fonts fall back to system fonts inside the rasterized image,
    because browsers block external font loads in SVG-as-image. */
@@ -149,6 +149,29 @@
     });
   }
 
+  /* ---------------- Word (.doc) ----------------
+     A Word-compatible HTML document: opens in Microsoft Word, LibreOffice
+     and Google Docs as an editable document, keeping the CV design. */
+  function toDoc(r) {
+    var doc = window.CvoraRender.render(r, { forPrint: true });
+    return getCssText().then(function (css) {
+      var title = (r.personal && r.personal.fullName) || r.title || "CV";
+      return '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">\n<head>\n<meta charset="utf-8">\n<title>' +
+        window.CvoraRender.esc(title) + " — CV</title>\n" +
+        '<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->\n' +
+        "<style>\n" + css + "\nbody{font-family:Calibri,Arial,sans-serif}\n</style>\n</head>\n<body>\n" +
+        doc.outerHTML + "\n</body>\n</html>";
+    });
+  }
+  function exportDoc(resume) {
+    window.CvoraApp.toast("Preparing Word document…");
+    toDoc(resume).then(function (html) {
+      downloadText(html, fileName(resume, "doc"), "application/msword");
+      store.recordDownload();
+      window.CvoraApp.toast("Word document downloaded — opens in Word and Google Docs.");
+    });
+  }
+
   /* ---------------- JSON ---------------- */
   function toJson(r) {
     return JSON.stringify(r, null, 2);
@@ -173,8 +196,10 @@
 
   window.CvoraExport = {
     exportImage: exportImage,
+    exportDoc: exportDoc,
     toTxt: toTxt,
     toHtml: toHtml,
+    toDoc: toDoc,
     toJson: toJson,
     importJsonFile: importJsonFile,
     downloadText: downloadText,

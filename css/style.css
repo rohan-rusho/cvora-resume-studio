@@ -151,6 +151,18 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .step-btn.done { border-color: #bbf7d0; background: #f0fdf4; color: var(--ok); }
 .step-pane h3 { margin-bottom: .2rem; }
 .step-pane .step-sub { color: var(--muted); font-size: .88rem; margin-bottom: .9rem; }
+/* Next / Previous at the bottom of every wizard step */
+.step-footer { display: flex; justify-content: space-between; align-items: center; gap: .75rem; margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.step-count { color: var(--muted); font-size: .85rem; font-weight: 600; text-align: center; }
+/* CV import modal */
+.import-drop { border: 2px dashed var(--line); border-radius: 10px; padding: 1.1rem; text-align: center; color: var(--ink); cursor: pointer; margin-bottom: 1rem; }
+.import-drop:hover, .import-drop.drag { border-color: var(--accent); background: var(--accent-soft); }
+.import-drop .hint { margin-bottom: 0; }
+.import-status { min-height: 1.3em; color: var(--muted); font-size: .9rem; margin: .6rem 0; }
+.import-results { background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; margin-top: .8rem; }
+.import-results h3 { margin-bottom: .4rem; }
+.import-results ul { margin: .4rem 0 .8rem; padding-left: 1.2rem; }
+.import-results li { margin-bottom: .25rem; font-size: .92rem; }
 .repeat-item { border: 1px solid var(--line); border-radius: 10px; padding: .9rem; margin-bottom: .8rem; background: #fff; }
 .repeat-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .6rem; gap: .5rem; }
 .repeat-head strong { font-size: .92rem; color: var(--navy); }

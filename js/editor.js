@@ -227,6 +227,11 @@
     Array.prototype.forEach.call(document.querySelectorAll(".step-pane"), function (p, j) {
       p.classList.toggle("hidden", j !== i);
     });
+    /* the new step's fields are at the top of the panel — scroll there so the
+       user never has to hunt for the step buttons again */
+    var panel = $("editorPanel");
+    if (panel) panel.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function buildStepPanels() {
@@ -237,6 +242,28 @@
       pane.className = "step-pane" + (i === stepIndex ? "" : " hidden");
       pane.setAttribute("data-pane", s.key);
       pane.innerHTML = stepHtml(s.key);
+      /* Next / Previous at the bottom of every step — no more scrolling back
+         to the top to find the next section. Last step reviews the CV. */
+      var isFirst = i === 0, isLast = i === STEPS.length - 1;
+      var footer = document.createElement("div");
+      footer.className = "step-footer";
+      footer.innerHTML =
+        '<button type="button" class="btn btn-outline" data-step-nav="prev"' + (isFirst ? " disabled" : "") + ">← Previous</button>" +
+        '<span class="step-count">Step ' + (i + 1) + " of " + STEPS.length + " — " + esc(s.label) + "</span>" +
+        '<button type="button" class="btn btn-primary" data-step-nav="next">' + (isLast ? "Review your CV ✓" : "Next →") + "</button>";
+      footer.querySelector('[data-step-nav="prev"]').addEventListener("click", function () {
+        if (stepIndex > 0) showStep(stepIndex - 1);
+      });
+      footer.querySelector('[data-step-nav="next"]').addEventListener("click", function () {
+        if (stepIndex < STEPS.length - 1) {
+          showStep(stepIndex + 1);
+        } else {
+          var previewBtn = $("modePreviewBtn");
+          if (previewBtn) previewBtn.click();
+          else window.CvoraApp.toast("All steps done — switch to Preview to review your CV.");
+        }
+      });
+      pane.appendChild(footer);
       wrap.appendChild(pane);
     });
     bindStepPanels();
@@ -957,12 +984,17 @@
       window.CvoraExport.downloadText(window.CvoraExport.toJson(current), window.CvoraExport.fileName(current, "json"), "application/json");
       window.CvoraApp.toast("CV data (JSON) downloaded — import it later from Tools.");
     });
+    $("btnDownloadDoc").addEventListener("click", function () {
+      store.saveResume(current);
+      window.CvoraExport.exportDoc(current);
+    });
     $("btnExportJson2").addEventListener("click", function () {
       store.saveResume(current);
       window.CvoraExport.downloadText(window.CvoraExport.toJson(current), window.CvoraExport.fileName(current, "json"), "application/json");
       window.CvoraApp.toast("CV data (JSON) downloaded.");
     });
     $("btnImportJson").addEventListener("click", function () { $("importJsonFile").click(); });
+    $("btnUploadCv").addEventListener("click", function () { window.CvoraImport.open("replace"); });
     $("importJsonFile").addEventListener("change", function (e) {
       var file = e.target.files && e.target.files[0];
       if (!file) return;

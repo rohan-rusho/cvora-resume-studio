@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CVora — Create Your Future. One Resume at a Time.</title>
-<meta name="description" content="Create a professional, ATS-friendly resume in minutes. 55+ premium templates, live preview, PDF download, cover letters.">
+<meta name="description" content="Create a professional, ATS-friendly resume in minutes. 100 premium templates, live preview, PDF/PNG/Word download, CV upload and cover letters.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,9 +43,9 @@
 <section class="view" id="view-landing">
   <div class="hero">
     <div class="hero-copy">
-      <span class="hero-badge">55+ premium templates • ATS-friendly • Free to start</span>
+      <span class="hero-badge">100 premium templates • ATS-friendly • Free to start</span>
       <h1>Your Dream Job Starts With a Better Resume.</h1>
-      <p class="hero-sub">Create a professional, ATS-friendly resume in minutes. Choose from 55+ premium templates, fill in your details, customize your design, and download your CV instantly.</p>
+      <p class="hero-sub">Create a professional, ATS-friendly resume in minutes. Choose from 100 premium templates, fill in your details, customize your design, and download your CV instantly.</p>
       <div class="hero-cta">
         <button class="btn btn-primary btn-lg" id="heroCreateBtn">Create My Resume →</button>
         <button class="btn btn-outline btn-lg" id="heroTemplatesBtn">Explore Templates</button>
@@ -58,7 +58,7 @@
   <div class="section" id="showcase">
     <div class="section-head">
       <h2>Templates hiring managers remember</h2>
-      <p>A few favourites from the library of 55.</p>
+      <p>A few favourites from the library of 100.</p>
     </div>
     <div class="tpl-grid" id="showcaseGrid"></div>
     <div class="center"><button class="btn btn-outline" id="viewAllTplBtn">View All Templates</button></div>
@@ -68,7 +68,7 @@
     <div class="section-head"><h2>How it works</h2><p>From blank page to finished CV in four steps.</p></div>
     <div class="steps-grid">
       <div class="step-card"><span class="step-num">1</span><h3>Enter Your Information</h3><p>Fill in guided forms — experience, education, skills, projects. No design skills needed.</p></div>
-      <div class="step-card"><span class="step-num">2</span><h3>Choose Your Perfect Template</h3><p>Browse 55 real templates by category, search, filter by ATS-friendly, and preview full-screen.</p></div>
+      <div class="step-card"><span class="step-num">2</span><h3>Choose Your Perfect Template</h3><p>Browse 100 real templates by category, search, filter by ATS-friendly, and preview full-screen.</p></div>
       <div class="step-card"><span class="step-num">3</span><h3>Customize Your Design</h3><p>Colors, fonts, spacing, margins, section order — the preview updates live as you type.</p></div>
       <div class="step-card"><span class="step-num">4</span><h3>Download Your CV</h3><p>Print-ready A4 PDF with selectable text and clickable links. Or print straight from the browser.</p></div>
     </div>
@@ -77,10 +77,11 @@
   <div class="section" id="features">
     <div class="section-head"><h2>Everything you need to get hired</h2></div>
     <div class="features-grid">
-      <div class="feat"><strong>55+ professional templates</strong><p>Genuinely different layouts — professional, modern, minimalist, creative, technical, academic and more.</p></div>
+      <div class="feat"><strong>100 professional templates</strong><p>Genuinely different layouts — professional, modern, minimalist, creative, technical, academic, executive, healthcare, legal, engineering, sales, finance and more.</p></div>
       <div class="feat"><strong>ATS-friendly designs</strong><p>Standard headings, readable order and selectable text, plus a built-in ATS checker.</p></div>
       <div class="feat"><strong>Live CV preview</strong><p>Every keystroke updates the document instantly. What you see is what you download.</p></div>
       <div class="feat"><strong>Writing assistance</strong><p>On-device helpers for summaries, achievement bullets and skills — no data leaves your browser.</p></div>
+      <div class="feat"><strong>Upload your existing CV</strong><p>Already have a CV? Upload the PDF, Word or text file — CVora reads it, fills in the editor, and you improve it from there. Your template and design stay yours.</p></div>
       <div class="feat"><strong>PDF downloads</strong><p>High-quality A4 or US Letter PDF from the real document — never a screenshot.</p></div>
       <div class="feat"><strong>Multiple resumes</strong><p>Create, duplicate, rename and manage a CV for every application from your dashboard.</p></div>
       <div class="feat"><strong>Cover letter builder</strong><p>Matching cover letters with the same template design, ready to download as PDF.</p></div>
@@ -118,7 +119,7 @@
 <section class="view hidden" id="view-templates">
   <div class="page-head">
     <h1>Template Gallery</h1>
-    <p>55 real templates. Every preview is the actual template rendered with sample data.</p>
+    <p>100 real templates. Every preview is the actual template rendered with sample data.</p>
   </div>
   <div class="tpl-toolbar">
     <input type="search" id="tplSearch" class="text-input" placeholder="Search templates… e.g. executive, minimal, tech">
@@ -150,6 +151,7 @@
         <button class="btn btn-outline btn-sm" id="btnDownloadJpg">JPG</button>
         <button class="btn btn-outline btn-sm" id="btnDownloadTxt">TXT</button>
         <button class="btn btn-outline btn-sm" id="btnDownloadHtml">HTML</button>
+        <button class="btn btn-outline btn-sm" id="btnDownloadDoc">DOC</button>
         <button class="btn btn-outline btn-sm" id="btnDownloadJson">JSON</button>
       </div>
     </div>
@@ -231,6 +233,11 @@
 
       <div class="panel-pane hidden" id="ptab-tools">
         <h3>Tools</h3>
+        <h4 class="tools-h">Upload an existing CV</h4>
+        <p class="hint">Upload a PDF, Word (.docx) or text file — or paste the text. CVora reads it and replaces this CV's content so you can edit and improve it. Your template and design stay the same.</p>
+        <div class="btn-row">
+          <button class="btn btn-outline btn-sm" id="btnUploadCv">⬆ Upload existing CV</button>
+        </div>
         <h4 class="tools-h">Version history</h4>
         <p class="hint">Snapshots are saved automatically as you edit. Restore any earlier version.</p>
         <ul class="version-list" id="versionList"></ul>
@@ -293,6 +300,7 @@
   </div>
   <div class="dash-actions">
     <button class="btn btn-primary" id="dashNewCv">+ Create New CV</button>
+    <button class="btn btn-outline" id="dashUploadCv">⬆ Upload Existing CV</button>
     <button class="btn btn-outline" id="dashNewLetter">+ Create Cover Letter</button>
     <button class="btn btn-ghost" id="dashLoadSample">Load sample CV</button>
   </div>
@@ -403,7 +411,7 @@
     <div class="footer-col"><strong>Company</strong><a href="#" data-legal="about">About Us</a><a href="#" data-legal="contact">Contact</a><a href="#" data-legal="help">Help Center</a></div>
     <div class="footer-col"><strong>Legal</strong><a href="#" data-legal="privacy">Privacy Policy</a><a href="#" data-legal="terms">Terms of Service</a></div>
   </div>
-  <p class="footer-base">© 2026 CVora — demo build. Data is stored locally in your browser.</p>
+  <p class="footer-base">© 2026 CVora — v1.2.0 demo build. Data is stored locally in your browser.</p>
 </footer>
 
 <!-- ===================== AUTH MODAL ===================== -->
@@ -442,6 +450,36 @@
   </div>
 </div>
 
+<!-- ===================== IMPORT MODAL ===================== -->
+<div class="modal hidden" id="importModal">
+  <div class="modal-card modal-wide">
+    <button class="modal-x" data-close="importModal">×</button>
+    <h2 id="importTitle">Upload an existing CV</h2>
+    <p class="hint">Your file is read in this browser — nothing is uploaded to a server. PDF and Word files need internet once, to load the parser library; pasted text and TXT files always work offline.</p>
+    <div class="import-drop" id="importDrop" role="button" tabindex="0">
+      <strong>📄 Choose a file or drop it here</strong>
+      <p class="hint">PDF, Word (.docx), TXT or Markdown — or a CVora JSON export.</p>
+      <input type="file" id="importFile" accept=".pdf,.docx,.doc,.txt,.md,.markdown,.json" class="hidden">
+    </div>
+    <label class="field"><span>Or paste your CV text</span>
+      <textarea id="importPaste" rows="6" class="text-input" placeholder="Paste the full text of your CV here…"></textarea>
+    </label>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="importParseBtn">Parse my CV →</button>
+      <button class="btn btn-ghost" id="importCloseBtn">Cancel</button>
+    </div>
+    <p class="import-status" id="importStatus"></p>
+    <div class="import-results hidden" id="importResults">
+      <h3>What we found</h3>
+      <div id="importSummary"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary hidden" id="importReplaceBtn">Replace this CV's content</button>
+        <button class="btn btn-outline" id="importNewBtn">Create as a new CV</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ===================== LEGAL MODAL ===================== -->
 <div class="modal hidden" id="legalModal">
   <div class="modal-card">
@@ -458,6 +496,7 @@
 <script src="js/store.js"></script>
 <script src="js/render.js"></script>
 <script src="js/export.js"></script>
+<script src="js/import.js"></script>
 <script src="js/editor.js"></script>
 <script src="js/app.js"></script>
 </body>
